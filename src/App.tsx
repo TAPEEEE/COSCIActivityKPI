@@ -1,26 +1,43 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import LoginPages from './pages/LoginPages';
+import ProtectedRoutes from './router/protected.router';
+import PublicRoutes from './router/public.router';
+import { useSelector } from 'react-redux';
+import { authSelector, relogin } from './store/slices/authSlice';
+import { useAppDispatch } from './store/store';
+import PageNotFound from './pages/PageNotFound';
 
-function App() {
+export default function App() {
+  const authReducer = useSelector(authSelector);
+  const dispatch = useAppDispatch();
+
+  React.useEffect(() => {
+    dispatch(relogin());
+  }, [dispatch]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Routes>
+        {/** Protected Routes */}
+        {/** Wrap all Route under ProtectedRoutes element */}
+        <Route
+          path="/"
+          element={<ProtectedRoutes isAuthented={authReducer.isAuthented} />}
         >
-          Learn React
-        </a>
-      </header>
+          <Route path="/test" element={<PageNotFound />} />
+        </Route>
+
+        {/** Wrap all Route under PublicRoutes element */}
+        <Route
+          path="/"
+          element={<PublicRoutes isAuthented={authReducer.isAuthented} />}
+        >
+          <Route path="/login" element={<LoginPages />} />
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
-
-export default App;

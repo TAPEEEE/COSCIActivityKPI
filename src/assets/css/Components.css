@@ -1,0 +1,28 @@
+.cardActive {
+  transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
+    0.3s box-shadow,
+    0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
+}
+
+.cardActive:hover {
+  transform: scale(1.05);
+}
+
+.swal2-container {
+  font-family: 'Kanit', sans-serif;
+}
+
+.row-light {
+  background-color: #b6c5f5;
+}
+
+.row-dark {
+  background-color: #84eb84;
+}
+
+.ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row) > td,
+.ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row) > td,
+.ant-table-thead > tr:hover:not(.ant-table-expanded-row) > td,
+.ant-table-tbody > tr:hover:not(.ant-table-expanded-row) > td {
+  background: unset;
+}
