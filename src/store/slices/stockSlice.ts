@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { server } from "../../constants";
-import { Product } from "../../types/product.type";
-import { httpClient } from "../../utils/HttpClient";
-import { RootState, store, useAppDispatch } from "../store";
-import { history } from "../../index";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { server } from '../../constants';
+import { Product } from '../../types/product.type';
+import { httpClient } from '../../utils/HttpClient';
+import { RootState, store, useAppDispatch } from '../store';
+import { history } from '../../index';
 
 export interface StockState {
   stockAllResult: Product[];
@@ -17,59 +17,59 @@ const initialState: StockState = {
 
 // Add
 export const addProduct = createAsyncThunk(
-  "stock/add",
+  'stock/add',
   async (formData: FormData) => {
     await httpClient.post(server.PRODUCT_URL, formData);
     // history.back();
     store.dispatch(getProducts());
-  }
+  },
 );
 
 // Query
 export const getProducts = createAsyncThunk(
-  "stock/getAll",
+  'stock/getAll',
   async (keyword?: string): Promise<Product[]> => {
     if (keyword) {
       const result = await httpClient.get<Product[]>(
-        `${server.PRODUCT_URL}/name/${keyword}`
+        `${server.PRODUCT_URL}/name/${keyword}`,
       );
       return result.data;
     } else {
       const result = await httpClient.get<Product[]>(server.PRODUCT_URL);
       return result.data;
     }
-  }
+  },
 );
 
 // Query by Id
 export const getProductById = createAsyncThunk(
-  "stock/getById",
+  'stock/getById',
   async (id: string): Promise<Product> => {
     const result = await await httpClient.get(`${server.PRODUCT_URL}/id/${id}`);
     return result.data;
-  }
+  },
 );
 
 // Delete
 export const deleteProduct = createAsyncThunk(
-  "stock/delete",
+  'stock/delete',
   async (id: string) => {
     await httpClient.delete(`${server.PRODUCT_URL}/id/${id}`);
     store.dispatch(getProducts());
-  }
+  },
 );
 
 // Edit
 export const editProdcut = createAsyncThunk(
-  "stock/edit",
+  'stock/edit',
   async (formData: any) => {
     await httpClient.put(server.PRODUCT_URL, formData);
     // history.back();
-  }
+  },
 );
 
 const stockSlice = createSlice({
-  name: "stock",
+  name: 'stock',
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {

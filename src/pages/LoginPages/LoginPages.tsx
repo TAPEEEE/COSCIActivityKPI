@@ -4,7 +4,7 @@ import logo from '../../assets/COSCI_logo.png';
 import { StudentLoginInterface } from '../../components/auth/StudentLoginInterface';
 import { TeacherLoginInterface } from '../../components/auth/TeacherLoginInterface';
 import { Tabs } from 'antd';
-import '../../scss/AmtTabList.scss';
+import '../../scss/AntTabList.scss';
 
 const onChange = (key: string) => {
   console.log(key);
@@ -25,8 +25,8 @@ const LoginPages: React.FC<any> = () => {
           alt="COSCI_logo"
         />
 
-        <div className="my-auto mt-24">
-          <div className="flex justify-center">
+        <div className="my-auto mt-24 mb-24">
+          <div className="flex justify-center cardResponsive">
             <Tabs
               onChange={onChange}
               type="card"
@@ -45,7 +45,6 @@ const LoginPages: React.FC<any> = () => {
                 };
               })}
             />
-            {/* <LoginInterface /> */}
           </div>
         </div>
       </body>

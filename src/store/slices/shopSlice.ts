@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { server } from "../../constants";
-import { Product } from "../../types/product.type";
-import { TransactionResponse } from "../../types/transaction.type";
-import { httpClient } from "../../utils/HttpClient";
-import { RootState } from "../store";
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { server } from '../../constants';
+import { Product } from '../../types/product.type';
+import { TransactionResponse } from '../../types/transaction.type';
+import { httpClient } from '../../utils/HttpClient';
+import { RootState } from '../store';
 
 export interface ShopState {
   transactionAllResult: TransactionResponse[];
@@ -24,13 +24,13 @@ const initialState: ShopState = {
 };
 
 export const getTransactions = createAsyncThunk(
-  "shop/transaction",
+  'shop/transaction',
   async (): Promise<TransactionResponse[]> => {
     const result = await httpClient.get<TransactionResponse[]>(
-      server.TRANSACTION_URL
+      server.TRANSACTION_URL,
     );
     return result.data;
-  }
+  },
 );
 
 const updateOrder = (state: ShopState, orderLines: any) => {
@@ -46,7 +46,7 @@ const updateOrder = (state: ShopState, orderLines: any) => {
 };
 
 export const submitPayment = createAsyncThunk(
-  "shop/submit",
+  'shop/submit',
   async (data: any) => {
     try {
       const result = await httpClient.post(server.TRANSACTION_URL, data);
@@ -54,11 +54,11 @@ export const submitPayment = createAsyncThunk(
     } catch (error) {
       alert(JSON.stringify(error));
     }
-  }
+  },
 );
 
 const shopSlice = createSlice({
-  name: "shop",
+  name: 'shop',
   initialState: initialState,
   reducers: {
     togglePaymentMode: (state, action: PayloadAction<void>) => {

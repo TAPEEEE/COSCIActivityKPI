@@ -1,0 +1,23 @@
+.ant-tabs {
+  .ant-tabs-nav {
+    margin: 0;
+    .ant-tabs-tab {
+      font-size: medium;
+      font-family: 'Kanit', Courier, monospace !important;
+      background-color: rgba(255, 255, 255, 0.331);
+    }
+  }
+}
+
+.ant-tabs-tab.ant-tabs-tab-active {
+  border-bottom: 2px solid white !important;
+  z-index: 2;
+  font-size: medium;
+  font-family: 'Kanit', Courier, monospace !important;
+  background-color: rgb(255, 255, 255) !important;
+  .ant-tabs-tab-btn {
+    color: black !important;
+    font-size: medium;
+    font-family: 'Kanit', Courier, monospace;
+  }
+}

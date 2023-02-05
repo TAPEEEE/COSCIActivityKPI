@@ -1,0 +1,21 @@
+.cardL {
+  width: 650px;
+}
+
+@media screen and (max-width: 380px) {
+  .cardL {
+    width: 330px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .cardL {
+    width: 700px;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .cardL {
+    width: 250px;
+  }
+}

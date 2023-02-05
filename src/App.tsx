@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { authSelector, relogin } from './store/slices/authSlice';
 import { useAppDispatch } from './store/store';
 import PageNotFound from './pages/PageNotFound';
+import RegisterPages from './pages/RegisterPages';
 
 export default function App() {
   const authReducer = useSelector(authSelector);
@@ -34,6 +35,7 @@ export default function App() {
           element={<PublicRoutes isAuthented={authReducer.isAuthented} />}
         >
           <Route path="/login" element={<LoginPages />} />
+          <Route path="/register" element={<RegisterPages />} />
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="*" element={<Navigate to="/login" />} />
         </Route>
