@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Modal, TableProps } from 'antd';
-import { Button, Space, Table } from 'antd';
+import { Button, Space, Table, Image } from 'antd';
 import filtersActivityList from '../../utils/filtersActivityList';
 import {
   CompassFilled,
@@ -196,43 +196,47 @@ const TableCompo: FC = () => {
               onCancel={handleCancel}
               footer={
                 <div className="flex justify-end mt-10">
-                  <button className="mr-2 font-Kanit inline-flex items-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-400 h-12">
+                  <button className="mr-2 font-Kanit inline-flex items-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-lg font-medium text-white shadow-sm hover:bg-red-400 h-12">
                     ปฎิเสธคำร้อง
                   </button>
-                  <button className="font-Kanit inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-500 h-12">
+                  <button className="font-Kanit inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-lg font-medium text-white shadow-sm hover:bg-green-500 h-12">
                     รับคำร้อง
                   </button>
                 </div>
               }
             >
-              <p className="font-semibold mt-8">
+              <p className="font-semibold mt-8 text-lg">
                 {`ผู้ยื่นคำร้อง : `}
                 <span className="font-normal ml-2">{record.name}</span>
               </p>
-              <p className="font-semibold mt-2">
+              <p className="font-semibold mt-2 text-lg">
                 {`กิจกรรมที่เข้าร่วม : `}
                 <span className="font-normal ml-2">{`COSCI FESTIVAL (CO-FEST) : Chapter 3 - Neon Cosiety`}</span>
               </p>
-              <p className="font-semibold mt-2">
+              <p className="font-semibold mt-2 text-lg">
                 {`หมวดหมู่กิจกรรม : `}
                 <span className="ml-2 bg-red-200 text-red-800 text-lg font-medium mr-2 px-2.5 py-0.5 rounded-full">
                   หมวดศิลปะวัฒนธรรม
                 </span>
               </p>
-              <p className="font-semibold mt-2">
+              <p className="font-semibold mt-2 text-lg">
                 {`จำนวนชั่วโมง : `}
                 <span className="font-normal ml-2">{`-`}</span>
               </p>
-              <p className="font-semibold mt-2">
+              <p className="font-semibold mt-2 text-lg">
                 {`วันที่เข้าร่วม : `}
                 <span className="font-normal ml-2">{``}</span>
               </p>
-              <p className="font-semibold mt-8">
+              <p className="font-semibold mt-8 text-lg">
                 {`หลักฐานการเข้าร่วมกิจกรรม `}
               </p>
-              <img
+              {/* <img
                 className="mt-2 rounded-lg"
                 src={`https://media.discordapp.net/attachments/789137436562685973/1037022084360048670/Component_12.png`}
+              /> */}
+              <Image
+                className="mt-2 rounded-lg"
+                src="http://cosci.swu.ac.th/storage/blogs/MEnDnGAI0AhTCbhWR6D8rZi1hUAw5bedxWQU1ZG4.png"
               />
             </Modal>
           </Space>
