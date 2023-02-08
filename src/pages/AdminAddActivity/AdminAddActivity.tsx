@@ -1,5 +1,5 @@
 import React from 'react';
-import AddActivity from '../../components/admin/AddActivity';
+// import AddActivity from '../../components/admin/AddActivity';
 import AdminNavbar from '../../components/admin/AdminNavbar';
 
 type AdminAddActivityProps = {
@@ -21,9 +21,7 @@ const AdminAddActivity: React.FC<any> = () => {
           </div>
         </header>
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-2 sm:px-0">
-            <AddActivity />
-          </div>
+          <div className="px-4 py-2 sm:px-0">{/* <AddActivity /> */}</div>
         </div>
       </body>
     </>

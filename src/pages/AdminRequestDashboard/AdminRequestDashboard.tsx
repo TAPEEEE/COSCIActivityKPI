@@ -9,7 +9,7 @@ type AdminRequestDashboardProps = {
 };
 
 const AdminRequestDashboard: React.FC<any> = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   function handleClick() {
     navigate('/admin-add-activity');
   }
