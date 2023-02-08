@@ -1,0 +1,19 @@
+.ant-modal-mask {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+.ant-modal {
+  width: 700px !important;
+}
+
+.ant-modal-content {
+  font-family: 'Kanit';
+
+  .ant-modal-header {
+    .ant-modal-title {
+      font-size: x-large;
+    }
+  }
+  .ant-modal-body {
+    font-size: 20px !important;
+  }
+}

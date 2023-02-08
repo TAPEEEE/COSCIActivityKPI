@@ -1,0 +1,66 @@
+.ant-table-wrapper {
+  background-color: #ececec;
+  .ant-table-content {
+    font-size: medium;
+    font-family: 'Kanit';
+    background-color: #f3f3f3;
+    .ant-table-thead {
+      .ant-table-cell {
+        background-color: rgb(31 41 55);
+        text-align: center;
+        color: white;
+        .ant-dropdown-trigger {
+          color: white;
+        }
+      }
+    }
+  }
+  .ant-table-cell {
+    text-align: center;
+  }
+  .ant-empty-description {
+    color: #383838;
+    font-size: medium;
+    font-family: 'Kanit';
+  }
+}
+
+.ant-pagination {
+  .ant-pagination-item {
+    color: white;
+    font-size: medium;
+    font-family: 'Kanit';
+  }
+  .ant-pagination-next {
+    color: black;
+  }
+}
+
+.ant-dropdown {
+  .ant-table-filter-dropdown {
+    .ant-dropdown-menu {
+      .ant-dropdown-menu-item {
+        font-size: medium;
+        font-family: 'Kanit';
+      }
+    }
+  }
+  .ant-table-filter-dropdown-btns {
+    .ant-btn {
+      background-color: cadetblue;
+      color: white;
+      font-family: 'Kanit';
+    }
+  }
+}
+
+.table-striped-rows tr:nth-child(2n) td {
+  background-color: #5f5f5f;
+}
+.table-striped-rows thead {
+  background-color: #b61111;
+}
+
+tableClass tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
