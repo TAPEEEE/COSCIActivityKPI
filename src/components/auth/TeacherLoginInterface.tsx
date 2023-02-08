@@ -41,7 +41,7 @@ export const TeacherLoginInterface = () => (
             <Form className="space-y-3">
               <Field
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg block w-full p-2.5"
-                placeholder="co6XXXXXXXX"
+                placeholder="Username"
                 name="user_id"
                 type="text"
               />

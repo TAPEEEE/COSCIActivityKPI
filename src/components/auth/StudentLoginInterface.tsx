@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import '../../index.css';
 import alertTermAndConditions from '../../utils/alertTeamAndConditions';
 import '../../scss/LoginInterface.scss';
+import ServiceClose from '../../utils/ServiceClose';
 
 const UserLoginSchema = Yup.object().shape({
   user_id: Yup.string()
@@ -23,6 +24,9 @@ export const StudentLoginInterface = () => (
       validationSchema={UserLoginSchema}
       onSubmit={(values) => {
         console.log(values);
+        {
+          ServiceClose;
+        }
       }}
     >
       {({ errors, touched }) => (
@@ -56,13 +60,14 @@ export const StudentLoginInterface = () => (
               ) : null}
               <div className="flex items-start">
                 <a
-                  href="#"
+                  onClick={ServiceClose}
                   className="text-sm text-[#00567e] hover:underline ml-auto"
                 >
                   ลืมรหัสผ่าน?
                 </a>
               </div>
               <button
+                onClick={ServiceClose}
                 type="submit"
                 className="w-full text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4 font-medium rounded-lg text-base px-5 py-2.5 text-center"
               >
@@ -70,7 +75,7 @@ export const StudentLoginInterface = () => (
               </button>
 
               <button
-                onClick={alertTermAndConditions}
+                onClick={ServiceClose}
                 type="button"
                 className="mt-2 w-full text-gray-800 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center"
               >
