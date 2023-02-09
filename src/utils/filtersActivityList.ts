@@ -24,6 +24,6 @@ export default function alertTermAndConditions(title: string) {
 
   Toast.fire({
     icon: 'success',
-    title: `${title} สำเร็จ`,
+    title: `ฟิลเตอร์เป็น ${title} สำเร็จ`,
   });
 }
