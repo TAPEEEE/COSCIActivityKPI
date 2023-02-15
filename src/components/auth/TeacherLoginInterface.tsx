@@ -7,6 +7,7 @@ import '../../scss/LoginInterface.scss';
 import { useSelector } from 'react-redux';
 import { store, useAppDispatch } from '../../store/store';
 import { authSelector, login } from '../../store/slices/authSlice';
+import { Alert } from '@mui/material';
 
 // const dispatch = useAppDispatch();
 // const authReducer = useSelector(authSelector);
@@ -29,7 +30,6 @@ const TeacherLoginInterface: FC = () => {
         }}
         validationSchema={UserLoginSchema}
         onSubmit={async (values, { setSubmitting }) => {
-          console.log(values);
           dispatch(login(values));
           setSubmitting(false);
         }}
@@ -72,6 +72,21 @@ const TeacherLoginInterface: FC = () => {
                 {errors.password && touched.password ? (
                   <div className="text-red-600 text-sm">{errors.password}</div>
                 ) : null}
+
+                {authReducer.isError && (
+                  <div
+                    className="bg-red-100 text-red-700 px-4 py-3 rounded relative"
+                    role="alert"
+                  >
+                    <span className="block sm:inline">
+                      ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง
+                    </span>
+                  </div>
+                )}
+                {authReducer.isAuthented && (
+                  <Alert severity="success">เข้าสู่ระบบสำเร็จ</Alert>
+                )}
+
                 <div className="flex items-start">
                   <a
                     href="#"
@@ -80,6 +95,7 @@ const TeacherLoginInterface: FC = () => {
                     ลืมรหัสผ่าน?
                   </a>
                 </div>
+
                 <button
                   type="submit"
                   className="w-full text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4 font-medium rounded-lg text-base px-5 py-2.5 text-center"

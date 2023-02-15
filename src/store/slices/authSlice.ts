@@ -98,7 +98,7 @@ const authSlice = createSlice({
         state.isAuthented = true;
         state.isError = false;
         state.loginResult = action.payload;
-        if (action.payload.data.role == 'admin') {
+        if (action.payload.data.role === 'admin') {
           state.isAdmin = true;
         }
       } else {
