@@ -2,6 +2,8 @@ import React, { FC, memo, useLayoutEffect, useRef, Fragment } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useAppDispatch } from '../../store/store';
+import { logout } from '../../store/slices/authSlice';
 
 const navigation = [
   { name: 'หน้าแรก', href: '/' },
@@ -15,6 +17,7 @@ function classNames(...classes: string[]) {
 }
 
 const AdminNavbar: FC = () => {
+  const dispatch = useAppDispatch();
   return (
     <Disclosure as="nav" className="bg-[#005076] font-Kanit">
       {({ open }) => (
@@ -54,9 +57,9 @@ const AdminNavbar: FC = () => {
                         to={item.href}
                         className={({ isActive }) => {
                           return (
-                            'text-gray-300 hover:bg-[#024a6b] hover:text-white ' +
+                            'text-gray-300 hover:text-white ' +
                             (!isActive
-                              ? 'text-gray-300 hover:bg-[#024a6b] hover:text-white'
+                              ? 'text-gray-300  hover:text-white'
                               : 'text-white ')
                           );
                         }}
@@ -96,10 +99,10 @@ const AdminNavbar: FC = () => {
                             href="#"
                             className={classNames(
                               active ? 'bg-gray-100' : '',
-                              'block px-4 py-2 text-sm text-gray-700',
+                              'block px-4 py-2 text-sm text-0',
                             )}
                           >
-                            Your Profile
+                            โปรไฟล์
                           </a>
                         )}
                       </Menu.Item>
@@ -112,20 +115,20 @@ const AdminNavbar: FC = () => {
                               'block px-4 py-2 text-sm text-gray-700',
                             )}
                           >
-                            Settings
+                            เปลี่ยนรหัสผ่าน
                           </a>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            onClick={() => dispatch(logout())}
                             className={classNames(
                               active ? 'bg-gray-100' : '',
                               'block px-4 py-2 text-sm text-gray-700',
                             )}
                           >
-                            Sign out
+                            ออกจากระบบ
                           </a>
                         )}
                       </Menu.Item>

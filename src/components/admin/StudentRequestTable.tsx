@@ -14,8 +14,8 @@ import type {
   SorterResult,
   TableRowSelection,
 } from 'antd/es/table/interface';
-import './CustomModal.scss';
-import './ActivityTable.scss';
+import './AdminComponentSCSS/CustomModal.scss';
+import './AdminComponentSCSS/ActivityTable.scss';
 import RequsetModal from './RequestModal';
 import { keys } from '@mui/system';
 
@@ -60,17 +60,17 @@ interface DataType {
   status: string;
 }
 
-const TableCompo: FC = () => {
+const StudentRequestTable: FC = () => {
   const data: DataType[] = [
     {
       key: '9456',
       student_id: 63130010046,
       name: 'ณัฏฐพล สุวรรโณ',
       event_name: 'ลอยกระทง',
-      status: 'รับเรื่อง',
+      status: 'กำลังดำเนินการ',
     },
     {
-      key: '4456',
+      key: '4416',
       student_id: 63130010047,
       name: 'ณัฏฐพล สุวรรโณ',
       event_name: 'ลอยกระทง',
@@ -84,11 +84,32 @@ const TableCompo: FC = () => {
       status: 'รับเรื่อง',
     },
     {
-      key: '4456',
+      key: '1111',
       student_id: 63130010049,
       name: 'ณัฏฐพล สุวรรโณ',
       event_name: 'ลอยกระทง',
-      status: 'ส่งเรื่องไปยังคณะ',
+      status: 'คำร้องถูกปฏิเสธ',
+    },
+    {
+      key: '1121',
+      student_id: 63130010049,
+      name: 'ณัฏฐพล สุวรรโณ',
+      event_name: 'ลอยกระทง',
+      status: 'กำลังดำเนินการ',
+    },
+    {
+      key: '1231',
+      student_id: 63130010049,
+      name: 'ณัฏฐพล สุวรรโณ',
+      event_name: 'ลอยกระทง',
+      status: 'กำลังดำเนินการ',
+    },
+    {
+      key: '5611',
+      student_id: 63130010049,
+      name: 'ณัฏฐพล สุวรรโณ',
+      event_name: 'ลอยกระทง',
+      status: 'ส่งเรื่องแล้ว',
     },
   ];
 
@@ -97,7 +118,7 @@ const TableCompo: FC = () => {
   >({});
   const [sortedInfo, setSortedInfo] = useState<SorterResult<DataType>>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isCurrentFilter, setIsCurrentFilter] = useState<string>('');
+  const [isCurrentFilter, setIsCurrentFilter] = useState<boolean>(false);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -125,14 +146,56 @@ const TableCompo: FC = () => {
       case 'ล้างตัวกรอง':
         setFilteredInfo({});
         setSortedInfo({});
+        setIsCurrentFilter(false);
         break;
       default:
+        setIsCurrentFilter(true);
         setFilteredInfo({
           filteredValue: filteredInfo.status,
           status: [value],
         });
     }
     filtersActivityList(`${value}`);
+  };
+
+  const ColorTag = (value: string) => {
+    switch (value) {
+      case 'รับเรื่อง':
+        return (
+          <>
+            <div className="ml-4 text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-blue-200 text-blue-700 rounded-full">
+              {value}
+            </div>
+          </>
+        );
+        break;
+      case 'กำลังดำเนินการ':
+        return (
+          <>
+            <div className="ml-4 text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-amber-200 text-amber-700 rounded-full">
+              {value}
+            </div>
+          </>
+        );
+        break;
+      case 'ส่งเรื่องแล้ว':
+        return (
+          <>
+            <div className="ml-4 text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-green-200 text-green-700 rounded-full">
+              {value}
+            </div>
+          </>
+        );
+        break;
+      default:
+        return (
+          <>
+            <div className="ml-4 text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-red-200 text-red-700 rounded-full">
+              {value}
+            </div>
+          </>
+        );
+    }
   };
 
   const columns: ColumnsType<DataType> = [
@@ -159,15 +222,11 @@ const TableCompo: FC = () => {
       key: 'status',
       filters: [
         { text: 'รับเรื่อง', value: 'รับเรื่อง' },
-        { text: 'กำลังดำเนินการ', value: 'กำลังดำเนินการ' },
-        { text: 'ส่งเรื่องไปยังคณะ', value: 'ส่งเรื่องไปยังคณะ' },
-        { text: 'เสร็จสิ้น', value: 'เสร็จสิ้น' },
+        { text: 'รอดำเนินการ', value: 'รอดำเนินการ' },
+        { text: 'ส่งเรื่องแล้ว', value: 'ส่งเรื่องแล้ว' },
+        { text: 'คำร้องถูกปฏิเสธ', value: 'คำร้องถูกปฏิเสธ' },
       ],
-      render: (_, record) => (
-        <div className="ml-4 text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-green-200 text-green-700 rounded-full">
-          {record.status.toString()}
-        </div>
-      ),
+      render: (_, record) => <>{ColorTag(record.status.toString())}</>,
       filteredValue: filteredInfo.status || null,
       onFilter: (value: string, record) => record.status.includes(value),
       ellipsis: true,
@@ -185,7 +244,7 @@ const TableCompo: FC = () => {
               onClick={showModal}
               className="font-Kanit inline-flex items-center rounded-md border border-transparent bg-amber-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-amber-600"
             >
-              รายละเอียด
+              รับคำร้อง
             </button>
             <Modal
               centered={true}
@@ -246,44 +305,48 @@ const TableCompo: FC = () => {
       <Space style={{ marginBottom: 16 }}>
         <Button
           icon={<CompassFilled />}
-          className="font-Kanit h-10  inline-flex items-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-700 shadow-sm hover:bg-green-700 "
+          className={`font-Kanit h-10  inline-flex items-center rounded-md border border-transparentpx-4 py-2 text-sm font-medium bg-sky-100 text-sky-700 shadow-sm hover:bg-sky-600`}
           onClick={() => FilterSelected('รับเรื่อง')}
         >
           รับเรื่อง
         </Button>
         <Button
           icon={<SafetyCertificateFilled />}
-          className="font-Kanit h-10 inline-flex items-center rounded-md border border-transparent bg-amber-100 px-4 py-2 text-sm font-medium text-amber-700 hover:text-white shadow-sm hover:bg-amber-700 "
+          className="font-Kanit h-10 inline-flex items-center rounded-md border border-transparent bg-amber-100 px-4 py-2 text-sm font-medium text-amber-700 hover:text-white shadow-sm hover:bg-amber-600 "
           onClick={() => FilterSelected('กำลังดำเนินการ')}
         >
           กำลังดำเนินการ
         </Button>
         <Button
           icon={<TagFilled />}
-          className="font-Kanit h-10  inline-flex items-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 shadow-sm hover:bg-blue-700 "
-          onClick={() => FilterSelected('ส่งเรื่องไปยังคณะ')}
+          className="font-Kanit h-10  inline-flex items-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-700 shadow-sm hover:bg-green-600 "
+          onClick={() => FilterSelected('ส่งเรื่องแล้ว')}
         >
-          ส่งเรื่องไปยังคณะ
+          ส่งเรื่องแล้ว
         </Button>
         <Button
           icon={<TagFilled />}
-          className="font-Kanit h-10  inline-flex items-center rounded-md border border-transparent bg-purple-100 px-4 py-2 text-sm font-medium text-purple-700 shadow-sm hover:bg-blue-700 "
-          onClick={() => FilterSelected('เสร็จสิ้น')}
+          className="font-Kanit h-10  inline-flex items-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-700 shadow-sm hover:bg-red-600 "
+          onClick={() => FilterSelected('คำร้องถูกปฏิเสธ')}
         >
-          เสร็จสิ้น
+          คำร้องถูกปฏิเสธ
         </Button>
 
         <Button
           icon={<DeleteFilled />}
-          className="font-Kanit h-10  inline-flex items-center rounded-md border border-transparent bg-red-200 px-4 py-2 text-sm font-medium text-red-700 shadow-sm hover:bg-red-500 hover:text-white"
+          className="font-Kanit h-10  inline-flex items-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-200 hover:text-red-700"
           onClick={() => FilterSelected('ล้างตัวกรอง')}
         >
           ล้างตัวกรอง
         </Button>
       </Space>
-      <Table pagination={{ pageSize: 5 }} columns={columns} dataSource={data} />
+      <Table
+        pagination={{ pageSize: 10 }}
+        columns={columns}
+        dataSource={data}
+      />
     </>
   );
 };
 
-export default TableCompo;
+export default StudentRequestTable;

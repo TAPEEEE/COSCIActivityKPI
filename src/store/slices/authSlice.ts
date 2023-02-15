@@ -1,3 +1,4 @@
+import { UserCircleIcon } from '@heroicons/react/24/outline';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { history } from '../..';
 import { server } from '../../constants';
@@ -12,12 +13,34 @@ export interface AuthState {
   isAuthenticating: boolean;
   isAuthented: boolean;
   isError: boolean;
+  isAdmin: boolean;
+}
+
+export interface UserCurrent {
+  email: string;
+  img_user: string;
+  name: string;
+  role: string;
+  tel: string;
+  user_id: string;
+  _id: string;
 }
 
 const initial: AuthState = {
   isAuthenticating: true,
   isAuthented: false,
   isError: false,
+  isAdmin: false,
+};
+
+const initialUser: UserCurrent = {
+  email: '',
+  img_user: '',
+  name: '',
+  role: '',
+  tel: '',
+  user_id: '',
+  _id: '',
 };
 
 export const login = createAsyncThunk('auth/login', async (values: User) => {
@@ -25,7 +48,6 @@ export const login = createAsyncThunk('auth/login', async (values: User) => {
   const { token } = result.data;
   if (token) {
     localStorage.setItem(server.TOKEN_KEY, token);
-    console.log(token);
   }
   return result.data;
 });
@@ -33,12 +55,12 @@ export const login = createAsyncThunk('auth/login', async (values: User) => {
 export const register = createAsyncThunk(
   'auth/register',
   async (value: User) => {
-    let result = await httpClient.post<RegisterResult>(
+    const result = await httpClient.post<RegisterResult>(
       server.REGISTER_URL,
       value,
     );
 
-    if (result.data.result === 'ok') {
+    if (result.data.result === 'OK') {
       history.back();
     }
     return result.data;
@@ -61,7 +83,8 @@ const authSlice = createSlice({
         state.loginResult = {
           refreshToken: '',
           token: _token,
-          result: 'ok',
+          result: 'OK',
+          data: initialUser,
         };
         state.isAuthented = true;
       }
@@ -71,10 +94,13 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     //login
     builder.addCase(login.fulfilled, (state, action) => {
-      if (action.payload.result === 'ok') {
+      if (action.payload.result === 'OK') {
         state.isAuthented = true;
         state.isError = false;
         state.loginResult = action.payload;
+        if (action.payload.data.role == 'admin') {
+          state.isAdmin = true;
+        }
       } else {
         state.isError = true;
         state.isAuthented = false;
@@ -84,7 +110,7 @@ const authSlice = createSlice({
 
     // register
     builder.addCase(register.fulfilled, (state, action) => {
-      state.isError = action.payload.result !== 'ok';
+      state.isError = action.payload.result !== 'OK';
     });
   },
 });

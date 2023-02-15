@@ -21,7 +21,7 @@ const TeacherRegisterInterface: FC<PreFilledProps> = (props) => {
   const Timer = (ms: number | undefined) =>
     new Promise((r) => setTimeout(r, ms));
   const [, setReload] = useState<boolean>(false);
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setReload(dataHook.reLoad);

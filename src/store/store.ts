@@ -1,9 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+import { configureStore } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
 
-import authReducer from "./slices/authSlice";
-import stockReducer from "./slices/stockSlice";
-import shopReducer from "./slices/shopSlice";
+import authReducer from './slices/authSlice';
+import stockReducer from './slices/stockSlice';
+import shopReducer from './slices/shopSlice';
 
 const reducer = {
   authReducer,
@@ -13,7 +13,7 @@ const reducer = {
 
 export const store = configureStore({
   reducer,
-  devTools: process.env.NODE_ENV === "development",
+  devTools: process.env.NODE_ENV === 'development',
 });
 
 // export type of root state from reducers

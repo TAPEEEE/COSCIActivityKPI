@@ -14,7 +14,7 @@ import type {
   SorterResult,
 } from 'antd/es/table/interface';
 
-import './ActivityTable.scss';
+import './AdminComponentSCSS/ActivityTable.scss';
 
 interface DataType {
   key: string;
@@ -199,6 +199,8 @@ const ActivityTable: FC = () => {
       //   </span>
       // ),
 
+      /* eslint-disable */
+
       filteredValue: filteredInfo.activitycategories || null,
       onFilter: (value: string, record) =>
         record.activitycategories.includes(value),
@@ -240,6 +242,7 @@ const ActivityTable: FC = () => {
           </button>
         </Space>
       ),
+      /* eslint-enable */
     },
   ];
 

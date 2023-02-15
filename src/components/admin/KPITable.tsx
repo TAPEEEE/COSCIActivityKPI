@@ -14,7 +14,7 @@ import type {
   SorterResult,
 } from 'antd/es/table/interface';
 
-import './ActivityTable.scss';
+import './AdminComponentSCSS/ActivityTable.scss';
 
 interface DataType {
   key: string;

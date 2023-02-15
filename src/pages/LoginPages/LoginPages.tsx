@@ -2,7 +2,7 @@ import React from 'react';
 import './LoginPages.scss';
 import logo from '../../assets/COSCI_logo.png';
 import { StudentLoginInterface } from '../../components/auth/StudentLoginInterface';
-import { TeacherLoginInterface } from '../../components/auth/TeacherLoginInterface';
+import TeacherLoginInterface from '../../components/auth/TeacherLoginInterface';
 import { Tabs } from 'antd';
 import '../../scss/AntTabList.scss';
 

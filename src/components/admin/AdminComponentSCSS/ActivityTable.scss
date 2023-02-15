@@ -54,6 +54,14 @@
   }
 }
 
+.ant-btn {
+  font-family: 'Kanit';
+}
+
+.ant-btn:hover {
+  color: white !important;
+}
+
 .table-striped-rows tr:nth-child(2n) td {
   background-color: #5f5f5f;
 }

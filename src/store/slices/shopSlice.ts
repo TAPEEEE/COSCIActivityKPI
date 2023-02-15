@@ -36,7 +36,7 @@ export const getTransactions = createAsyncThunk(
 const updateOrder = (state: ShopState, orderLines: any) => {
   let totalPrice = 0;
   let taxAmt = 0;
-  for (let item of orderLines) {
+  for (const item of orderLines) {
     totalPrice += item.price * item.qty;
   }
   taxAmt = totalPrice * 0.07;
@@ -65,9 +65,9 @@ const shopSlice = createSlice({
       state.mIsPaymentMade = !state.mIsPaymentMade;
     },
     addOrder: (state, action: PayloadAction<Product>) => {
-      let product = action.payload;
+      const product = action.payload;
 
-      let index = state.mOrderLines.findIndex((item) => {
+      const index = state.mOrderLines.findIndex((item) => {
         return item._id === product._id;
       });
 
@@ -80,8 +80,8 @@ const shopSlice = createSlice({
     },
     removeOrder: (state, action: PayloadAction<Product>) => {
       const product = action.payload;
-      let orderLines = state.mOrderLines;
-      var foundIndex = orderLines.indexOf(product);
+      const orderLines = state.mOrderLines;
+      const foundIndex = orderLines.indexOf(product);
 
       orderLines.map((item: any) => {
         if (item.product_id === product.product_id) {

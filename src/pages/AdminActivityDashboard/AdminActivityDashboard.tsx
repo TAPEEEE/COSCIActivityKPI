@@ -19,7 +19,7 @@ const event = {
 };
 
 const AdminActivityDashboard: FC = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   function handleClick() {
     navigate('/admin-add-activity');
