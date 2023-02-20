@@ -74,7 +74,9 @@ const authSlice = createSlice({
     logout: (state, action: PayloadAction<void>) => {
       state.isAuthented = false;
       state.isError = false;
+      state.isAdmin = false;
       localStorage.removeItem(server.TOKEN_KEY);
+
       history.push('/login');
     },
     relogin: (state: AuthState, action: PayloadAction<void>) => {
