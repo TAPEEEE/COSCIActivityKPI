@@ -3,7 +3,7 @@ import React, { FC, memo } from 'react';
 // -[#005076]
 const Footer: FC = () => {
   return (
-    <footer className="p-4 sm:p-6 bg-[#000] font-Kanit">
+    <footer className="p-4 sm:p-6 bg-[#151d29] font-Kanit mt-20">
       <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 bottom-0">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0 ml-5">

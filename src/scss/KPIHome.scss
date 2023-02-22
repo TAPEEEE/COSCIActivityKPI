@@ -1,0 +1,21 @@
+.cardHome {
+  width: 1000px !important;
+}
+
+@media screen and (max-width: 380px) {
+  .cardHome {
+    width: 330px !important;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .cardHome {
+    width: 700px;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .cardHome {
+    width: 250px !important;
+  }
+}
