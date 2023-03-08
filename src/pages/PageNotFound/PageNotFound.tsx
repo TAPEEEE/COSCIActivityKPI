@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Result } from 'antd';
-import { useAppDispatch } from "../../store/store";
-import { logout } from "../../store/slices/authSlice";
+import { useAppDispatch } from '../../store/store';
+import { logout } from '../../store/slices/authSlice';
 
 type PageNotFoundProps = {
   //

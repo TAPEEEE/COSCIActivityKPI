@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import '../../index.css';
-import alertTermAndConditions from '../../utils/alertTeamAndConditions';
+import alertTermAndConditions from '../../utils/alertTermAndConditions';
 import '../../scss/LoginInterface.scss';
 import ServiceClose from '../../utils/ServiceClose';
 

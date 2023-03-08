@@ -6,7 +6,7 @@ type Props = {
 };
 
 const PublicRoutes = ({ isAuthented }: Props) => {
-  return isAuthented ? <Navigate to="/teacher-home" /> : <Outlet />;
+  return isAuthented ? <Navigate to="/" /> : <Outlet />;
 };
 
 export default PublicRoutes;

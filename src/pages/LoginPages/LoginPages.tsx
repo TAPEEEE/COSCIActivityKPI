@@ -1,21 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './LoginPages.scss';
 import logo from '../../assets/COSCI_logo.png';
 import { StudentLoginInterface } from '../../components/auth/StudentLoginInterface';
 import TeacherLoginInterface from '../../components/auth/TeacherLoginInterface';
 import { Tabs } from 'antd';
 import '../../scss/AntTabList.scss';
+import { Button, Modal, Space } from 'antd';
+import { authSelector } from '../../store/slices/authSlice';
+import { useSelector } from 'react-redux';
+import OtpInterface from '../../components/auth/OtpInterface';
 
 const onChange = (key: string) => {
   console.log(key);
 };
 
-const role: String[][] = [
-  ['นิสิต', 'LoginInterFace'],
-  ['อาจารย์และบุคลากร', 'LoginInterFace'],
-];
+const role = ['นิสิต', 'อาจารย์และบุคลากร'];
 
 const LoginPages: React.FC<any> = () => {
+  const [notVetify, isNotVetify] = useState(false);
+  const authReducer = useSelector(authSelector);
+  useEffect(() => {
+    if (authReducer.isNotVetify) {
+      isNotVetify(true);
+    }
+  });
   return (
     <>
       <body className="w-screen h-screen bgimg overflow-auto">
@@ -27,24 +35,28 @@ const LoginPages: React.FC<any> = () => {
 
         <div className="my-auto mt-24 mb-24">
           <div className="flex justify-center cardResponsive">
-            <Tabs
-              onChange={onChange}
-              type="card"
-              items={role.map((_, i) => {
-                const id = String(i + 1);
-                function componentRender(j: number) {
-                  if (j === 0) {
-                    return <StudentLoginInterface />;
+            {!notVetify && (
+              <Tabs
+                onChange={onChange}
+                type="card"
+                items={role.map((_, i) => {
+                  const id = String(i + 1);
+                  function componentRender(j: number) {
+                    if (j === 0) {
+                      return <StudentLoginInterface />;
+                    }
+                    return <TeacherLoginInterface />;
                   }
-                  return <TeacherLoginInterface />;
-                }
-                return {
-                  label: `${role[i][0]}`,
-                  key: id,
-                  children: componentRender(i),
-                };
-              })}
-            />
+                  return {
+                    label: `${role[i]}`,
+                    key: id,
+                    children: componentRender(i),
+                  };
+                })}
+              />
+            )}
+
+            {notVetify && <OtpInterface />}
           </div>
         </div>
       </body>

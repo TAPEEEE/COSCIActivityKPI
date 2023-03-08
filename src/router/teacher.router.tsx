@@ -2,11 +2,11 @@ import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 type Props = {
-  isAdmin: boolean;
+  isTeacher: boolean;
 };
 
-const AdminRoutes = ({ isAdmin }: Props) => {
-  return isAdmin ? <Outlet /> : <Navigate to="/login" />;
+const AdminRoutes = ({ isTeacher }: Props) => {
+  return isTeacher ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default AdminRoutes;

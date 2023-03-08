@@ -4,23 +4,37 @@ import logo from '../../assets/COSCI_logo.png';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import TeacherRegisterInterface from '../../components/auth/TeacherRegisterInterface';
+import axios from 'axios';
+import { TeacherUpload, TeacherUploadResult } from '../../types/teacher-upload';
 
 const RegisterPages: React.FC<any> = () => {
-  // const [userID, setUserID] = useState<String>('');
+  const [userID, setUserID] = useState<String>('');
   const [isFind, setIsFine] = useState<Boolean>(false);
   const Timer = (ms: number | undefined) =>
     new Promise((r) => setTimeout(r, ms));
 
   const formik = useFormik({
     initialValues: {
-      user_id: '',
+      user_id: 'aaaaa',
+      test: '12341234',
     },
     validationSchema: Yup.object({
       user_id: Yup.string().required('กรุณากรอกชื่อผู้ใช้'),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { setSubmitting }) => {
       await Timer(800);
+      setUserID(values.user_id);
       console.log(values);
+      axios
+        .post('http://localhost:8081/api/auth/getteacher-uploaded', {
+          user_id: userID,
+          test: '12341234',
+        })
+        .then((response) => {
+          console.log(response);
+          // Handle response
+        });
+      setSubmitting(false);
       setIsFine(true);
     },
   });

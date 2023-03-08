@@ -1,13 +1,14 @@
-import React, { FC, memo, useLayoutEffect, useRef, Fragment } from 'react';
+import React, { FC, memo, Fragment } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useAppDispatch } from '../../store/store';
 import { logout } from '../../store/slices/authSlice';
 
 const navigation = [
   { name: 'หน้าแรก', href: '/teacher-home' },
-  { name: 'ประวัติคำร้อง', href: '/admin-request-dashboard' },
+  { name: 'ตรวจสอบกิจกรรม', href: '/teacher-kpi-export' },
+  { name: 'ประวัติคำร้อง', href: '/teacher-kpi-history' },
 ];
 
 function classNames(...classes: string[]) {

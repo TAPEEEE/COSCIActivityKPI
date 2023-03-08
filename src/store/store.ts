@@ -2,13 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
 import authReducer from './slices/authSlice';
-import stockReducer from './slices/stockSlice';
-import shopReducer from './slices/shopSlice';
+import otpReducer from './slices/otpSlice';
+import teacherUploadReducer from './slices/teacherUploadSlice';
 
 const reducer = {
   authReducer,
-  stockReducer,
-  shopReducer,
+  otpReducer,
+  teacherUploadReducer,
 };
 
 export const store = configureStore({
