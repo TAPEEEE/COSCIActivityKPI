@@ -54,7 +54,7 @@ const StudentHome: React.FC<any> = () => {
             <div className="mx-4 cardHome bg-gray-100 my-8 shadow-md rounded-lg">
               <div className="bg-[#1f2937] rounded-t-lg">
                 <div className="flex justify-between">
-                  <h1 className="font-Kanit text-white font-medium text-xl mx-4 my-4 pl-2">
+                  <h1 className="font-Kanit text-white font-medium text-xl mx-4 my-4 pl-2 sm:text-md">
                     กิจกรรมนิสิตทั้งหมด
                   </h1>
                 </div>

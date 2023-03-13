@@ -6,7 +6,7 @@ import { history } from '../..';
 import { server } from '../../constants';
 import { LoginResult, RegisterResult } from '../../types/auth-result.type';
 import { User } from '../../types/user.type';
-import { Otp, OtpResult } from '../../types/otp-verify';
+import { Otp, OtpResult, ResendOtp } from '../../types/otp-verify';
 import { httpClient } from '../../utils/HttpClient';
 import { RootState } from '../store';
 
@@ -60,6 +60,23 @@ export const login = createAsyncThunk('auth/login', async (values: User) => {
   return result.data;
 });
 
+export const otpVerify = createAsyncThunk('auth/otp', async (values: Otp) => {
+  const result = await httpClient.post<OtpResult>(server.TEACHER_OTP, values);
+  const { token } = result.data;
+  if (token) {
+    localStorage.setItem(server.TOKEN_KEY, token);
+  }
+  localStorage.setItem('user', JSON.stringify(result.data.data));
+  return result.data;
+});
+
+export const otpResend = createAsyncThunk(
+  'auth/resendotp',
+  async (formData: ResendOtp) => {
+    await httpClient.post(server.RESEND_OTP_TEACHER, formData);
+  },
+);
+
 export const register = createAsyncThunk(
   'auth/register',
   async (value: User) => {
@@ -90,15 +107,15 @@ const authSlice = createSlice({
       state.isError = false;
       state.isAdmin = false;
       state.isTeacher = false;
+      state.isNotVetify = false;
       localStorage.removeItem(server.TOKEN_KEY);
       localStorage.removeItem('user');
-
       history.push('/login');
     },
     relogin: (state: AuthState, action: PayloadAction<void>) => {
       const _token = localStorage.getItem(server.TOKEN_KEY);
       const user = JSON.parse(localStorage.getItem('user')!);
-      if (_token) {
+      if (_token && user) {
         state.loginResult = {
           refreshToken: '',
           token: _token,
@@ -125,6 +142,7 @@ const authSlice = createSlice({
           state.isTeacher = true;
         }
       } else if (action.payload.result === 'Wait') {
+        state.isError = false;
         state.isNotVetify = true;
         state.loginResult = {
           refreshToken: '',
@@ -139,10 +157,28 @@ const authSlice = createSlice({
       state.isAuthenticating = false;
     });
 
-    // register
-    builder.addCase(register.fulfilled, (state, action) => {
-      state.isError = action.payload.result !== 'OK';
+    builder.addCase(otpVerify.fulfilled, (state, action) => {
+      const user = JSON.parse(localStorage.getItem('user')!);
+      if (action.payload.result === 'OK') {
+        state.isAuthented = true;
+        state.isError = false;
+        state.loginResult = action.payload;
+        if (action.payload.data.role === 'admin') {
+          state.isAdmin = true;
+        } else {
+          state.isTeacher = true;
+        }
+      } else {
+        state.isError = true;
+        state.isAuthented = false;
+      }
+      state.isAuthenticating = false;
     });
+
+    // register
+    // builder.addCase(register.fulfilled, (state, action) => {
+    //   state.isError = action.payload.result !== 'OK';
+    // });
   },
 });
 

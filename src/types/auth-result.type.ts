@@ -12,7 +12,7 @@ export interface RegisterResult {
 }
 
 export interface User {
-  email: string;
+  email?: string;
   img_user: string;
   name: string;
   role: string;

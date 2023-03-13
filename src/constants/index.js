@@ -32,4 +32,5 @@ export const server = {
   REPORT_URL: `report`,
   TOKEN_KEY: `token`,
   REFRESH_TOKEN_KEY: `refresh_token`,
+  RESEND_OTP_TEACHER: `auth/verify/resendteacher`,
 };

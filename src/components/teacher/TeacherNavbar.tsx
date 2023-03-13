@@ -18,7 +18,7 @@ function classNames(...classes: string[]) {
 const TeacherNavbar: FC = () => {
   const dispatch = useAppDispatch();
   return (
-    <Disclosure as="nav" className="bg-[#000] font-Kanit">
+    <Disclosure as="nav" className="bg-[#000] font-Kanit sticky top-0 z-10">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
