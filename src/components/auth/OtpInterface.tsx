@@ -8,9 +8,7 @@ import { useSelector } from 'react-redux';
 import { store, useAppDispatch } from '../../store/store';
 import {
   authSelector,
-  login,
   logout,
-  otpClear,
   otpVerify,
   otpResend,
 } from '../../store/slices/authSlice';
@@ -28,8 +26,7 @@ const OtpInterface: FC = () => {
   const dispatch = useAppDispatch();
   const authReducer = useSelector(authSelector);
   const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(10);
-  const [email, setEmail] = useState(authReducer.loginResult?.data.email);
+  const [seconds, setSeconds] = useState(30);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -54,7 +51,7 @@ const OtpInterface: FC = () => {
 
   const resendOTP = () => {
     setSeconds(10);
-    dispatch(otpResend({ email: email }));
+    dispatch(otpResend({ email: authReducer.loginResult?.data.email }));
   };
 
   const back = async () => {

@@ -1,21 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './RegisterPages.css';
 import logo from '../../assets/COSCI_logo.png';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import TeacherRegisterInterface from '../../components/auth/TeacherRegisterInterface';
 import axios from 'axios';
-import { TeacherUpload, TeacherUploadResult } from '../../types/teacher-upload';
+import { useSelector } from 'react-redux';
+import { store, useAppDispatch } from '../../store/store';
+import {
+  teacherupload,
+  teacherUploadSelector,
+} from '../../store/slices/teacherUploadSlice';
+import alertRegister from '../../utils/alertRegister';
 
 const RegisterPages: React.FC<any> = () => {
-  const [userID, setUserID] = useState<String>('');
-  const [isFind, setIsFine] = useState<Boolean>(false);
+  const dispatch = useAppDispatch();
+  const teacherUploadReducer = useSelector(teacherUploadSelector);
+
   const Timer = (ms: number | undefined) =>
     new Promise((r) => setTimeout(r, ms));
 
   const formik = useFormik({
     initialValues: {
-      user_id: 'aaaaa',
+      user_id: '',
       test: '12341234',
     },
     validationSchema: Yup.object({
@@ -23,19 +30,8 @@ const RegisterPages: React.FC<any> = () => {
     }),
     onSubmit: async (values, { setSubmitting }) => {
       await Timer(800);
-      setUserID(values.user_id);
-      console.log(values);
-      axios
-        .post('http://localhost:8081/api/auth/getteacher-uploaded', {
-          user_id: userID,
-          test: '12341234',
-        })
-        .then((response) => {
-          console.log(response);
-          // Handle response
-        });
+      dispatch(teacherupload(values));
       setSubmitting(false);
-      setIsFine(true);
     },
   });
 
@@ -55,7 +51,7 @@ const RegisterPages: React.FC<any> = () => {
                   สมัครสมาชิก
                 </h3>
                 <form onSubmit={formik.handleSubmit}>
-                  {!isFind && (
+                  {!teacherUploadReducer.isFind && (
                     <>
                       <label className="text-sm font-medium text-gray-900 block mb-2 mt-5">
                         ชื่อผู้ใช้
@@ -75,10 +71,20 @@ const RegisterPages: React.FC<any> = () => {
                           {formik.errors.user_id}
                         </div>
                       ) : null}
+                      {teacherUploadReducer.isError && (
+                        <div
+                          className="bg-red-100 text-red-700 px-4 py-3 rounded relative"
+                          role="alert"
+                        >
+                          <span className="block sm:inline">
+                            กรอกชื่อผู้ใช้ไม่ถูกต้อง
+                          </span>
+                        </div>
+                      )}
                     </>
                   )}
 
-                  {!isFind && (
+                  {!teacherUploadReducer.isFind && (
                     <>
                       <button
                         type="submit"
@@ -89,7 +95,7 @@ const RegisterPages: React.FC<any> = () => {
                     </>
                   )}
                 </form>
-                {!isFind && (
+                {!teacherUploadReducer.isFind && (
                   <>
                     <div className="flex items-start">
                       <a
@@ -102,7 +108,7 @@ const RegisterPages: React.FC<any> = () => {
                   </>
                 )}
 
-                {isFind && (
+                {teacherUploadReducer.isFind && (
                   <TeacherRegisterInterface
                     object={{
                       user_id: '',

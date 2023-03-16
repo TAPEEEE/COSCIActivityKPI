@@ -11,6 +11,16 @@ export interface RegisterResult {
   error?: string;
 }
 
+export interface Register {
+  user_id?: string;
+  name?: string;
+  password?: string;
+  confirmpassword?: string;
+  role?: string;
+  email?: string;
+  tel?: string;
+}
+
 export interface User {
   email?: string;
   img_user: string;

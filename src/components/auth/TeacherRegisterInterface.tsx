@@ -4,6 +4,11 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { Alert } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { teacherUploadSelector } from '../../store/slices/teacherUploadSlice';
+import { useAppDispatch } from '../../store/store';
+import { authSelector, logout, register } from '../../store/slices/authSlice';
+import alertRegister from '../../utils/alertRegister';
 
 interface PreFilledProps {
   object: {
@@ -21,8 +26,15 @@ const TeacherRegisterInterface: FC<PreFilledProps> = (props) => {
   const dataHook = props;
   const Timer = (ms: number | undefined) =>
     new Promise((r) => setTimeout(r, ms));
-  const [, setReload] = useState<boolean>(false);
+  const [reload, setReload] = useState<boolean>(false);
   const navigate = useNavigate();
+  const teacherUploadReducer = useSelector(teacherUploadSelector);
+  const dispatch = useAppDispatch();
+  const authReducer = useSelector(authSelector);
+  const back = async () => {
+    await dispatch(logout());
+    window.location.reload();
+  };
 
   useEffect(() => {
     setReload(dataHook.reLoad);
@@ -33,13 +45,13 @@ const TeacherRegisterInterface: FC<PreFilledProps> = (props) => {
 
   const formik = useFormik({
     initialValues: {
-      user_id: dataHook.object.user_id,
-      name: dataHook.object.name,
+      user_id: teacherUploadReducer.teacherUploadResult?.data.data.user_id,
+      name: teacherUploadReducer.teacherUploadResult?.data.data.name,
       password: '',
       confirmpassword: '',
-      role: dataHook.object.role,
-      email: dataHook.object.email,
-      tel: dataHook.object.tel,
+      role: teacherUploadReducer.teacherUploadResult?.data.data.role,
+      email: teacherUploadReducer.teacherUploadResult?.data.data.email,
+      tel: teacherUploadReducer.teacherUploadResult?.data.data.tel,
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -62,8 +74,18 @@ const TeacherRegisterInterface: FC<PreFilledProps> = (props) => {
     }),
     onSubmit: async (values) => {
       console.log(values);
-      await Timer(1000);
-      navigate('/otpverify');
+      await dispatch(register(values));
+      if (authReducer.registerResult?.error) {
+        alertRegister(false, 'สมัครสมาชิกไม่สำเร็จ', '');
+      } else {
+        alertRegister(
+          true,
+          'สมัครสมาชิกสำเร็จ',
+          'สามารถเข้าสู่ระบบได้จากหน้า Login',
+        );
+      }
+      await Timer(2000);
+      navigate('/login');
     },
   });
 
@@ -186,8 +208,19 @@ const TeacherRegisterInterface: FC<PreFilledProps> = (props) => {
         ) : null}
       </div>
 
-      <button className="w-full mt-5 text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+      <button
+        type="submit"
+        className="w-full mt-5 text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center"
+      >
         สมัครสมาชิก
+      </button>
+
+      <button
+        onClick={back}
+        type="button"
+        className="w-full mt-3 text-gray-800 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center"
+      >
+        ย้อนกลับ
       </button>
     </form>
   );

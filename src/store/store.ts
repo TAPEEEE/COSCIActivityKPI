@@ -2,12 +2,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
 import authReducer from './slices/authSlice';
-import otpReducer from './slices/otpSlice';
 import teacherUploadReducer from './slices/teacherUploadSlice';
 
 const reducer = {
   authReducer,
-  otpReducer,
   teacherUploadReducer,
 };
 

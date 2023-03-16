@@ -17,13 +17,8 @@ const onChange = (key: string) => {
 const role = ['นิสิต', 'อาจารย์และบุคลากร'];
 
 const LoginPages: React.FC<any> = () => {
-  const [notVetify, isNotVetify] = useState(false);
   const authReducer = useSelector(authSelector);
-  useEffect(() => {
-    if (authReducer.isNotVetify) {
-      isNotVetify(true);
-    }
-  });
+
   return (
     <>
       <body className="w-screen h-screen bgimg overflow-auto">
@@ -35,7 +30,7 @@ const LoginPages: React.FC<any> = () => {
 
         <div className="my-auto mt-24 mb-24">
           <div className="flex justify-center cardResponsive">
-            {!notVetify && (
+            {!authReducer.isNotVetify && (
               <Tabs
                 onChange={onChange}
                 type="card"
@@ -56,7 +51,7 @@ const LoginPages: React.FC<any> = () => {
               />
             )}
 
-            {notVetify && <OtpInterface />}
+            {authReducer.isNotVetify && <OtpInterface />}
           </div>
         </div>
       </body>

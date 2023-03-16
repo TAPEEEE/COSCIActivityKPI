@@ -26,7 +26,7 @@ export const server = {
   TEACHER_OTP: `auth/verifyteacher`,
   GET_TEAHER_INFOMATION: `auth/getteacher-uploaded`,
   REFRESH_TOKEN_URL: `refresh/token`,
-  REGISTER_URL: `register`,
+  REGISTER_URL: `auth/teacher-register`,
   PRODUCT_URL: `product`,
   TRANSACTION_URL: `transaction`,
   REPORT_URL: `report`,

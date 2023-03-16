@@ -4,7 +4,11 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { stat } from 'fs';
 import { history } from '../..';
 import { server } from '../../constants';
-import { LoginResult, RegisterResult } from '../../types/auth-result.type';
+import {
+  LoginResult,
+  Register,
+  RegisterResult,
+} from '../../types/auth-result.type';
 import { User } from '../../types/user.type';
 import { Otp, OtpResult, ResendOtp } from '../../types/otp-verify';
 import { httpClient } from '../../utils/HttpClient';
@@ -79,15 +83,12 @@ export const otpResend = createAsyncThunk(
 
 export const register = createAsyncThunk(
   'auth/register',
-  async (value: User) => {
-    const result = await httpClient.post<RegisterResult>(
+  async (value: Register) => {
+    const result = await httpClient.patch<RegisterResult>(
       server.REGISTER_URL,
       value,
     );
-
-    if (result.data.result === 'OK') {
-      history.back();
-    }
+    console.log(result);
     return result.data;
   },
 );
@@ -96,12 +97,6 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: initial,
   reducers: {
-    otpClear: (state, action: PayloadAction<void>) => {
-      state.isNotVetify = false;
-      localStorage.removeItem(server.TOKEN_KEY);
-      localStorage.removeItem('user');
-      history.push('/');
-    },
     logout: (state, action: PayloadAction<void>) => {
       state.isAuthented = false;
       state.isError = false;
@@ -158,7 +153,6 @@ const authSlice = createSlice({
     });
 
     builder.addCase(otpVerify.fulfilled, (state, action) => {
-      const user = JSON.parse(localStorage.getItem('user')!);
       if (action.payload.result === 'OK') {
         state.isAuthented = true;
         state.isError = false;
@@ -175,13 +169,13 @@ const authSlice = createSlice({
       state.isAuthenticating = false;
     });
 
-    // register
-    // builder.addCase(register.fulfilled, (state, action) => {
-    //   state.isError = action.payload.result !== 'OK';
-    // });
+    //register
+    builder.addCase(register.fulfilled, (state, action) => {
+      state.isError = action.payload.result !== 'OK';
+    });
   },
 });
 
-export const { logout, relogin, otpClear } = authSlice.actions;
+export const { logout, relogin } = authSlice.actions;
 export const authSelector = (store: RootState) => store.authReducer;
 export default authSlice.reducer;

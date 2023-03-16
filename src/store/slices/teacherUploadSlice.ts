@@ -8,9 +8,11 @@ export interface TeacherUploadState {
   teacherUploadResult?: TeacherUploadResult;
   isFind: boolean;
   isError: boolean;
+  isSuccess: boolean;
 }
 
 const initial: TeacherUploadState = {
+  isSuccess: false,
   isFind: false,
   isError: false,
 };
@@ -22,8 +24,10 @@ export const teacherupload = createAsyncThunk(
       server.GET_TEAHER_INFOMATION,
       values,
     );
-    console.log(values);
-    // console.log(result);
+    const data = result.data.data;
+    if (data) {
+      localStorage.setItem('user', JSON.stringify(result.data.data));
+    }
     return result.data;
   },
 );
@@ -37,10 +41,19 @@ const TeacherUploadSlice = createSlice({
       if (action.payload.result === 'OK') {
         state.isFind = true;
         state.isError = false;
+        state.isSuccess = false;
+        state.teacherUploadResult = action.payload;
+      } else if (
+        action.payload.message === 'Request failed with status code 403'
+      ) {
+        state.isFind = false;
+        state.isError = false;
+        state.isSuccess = true;
         state.teacherUploadResult = action.payload;
       } else {
         state.isError = true;
         state.isFind = false;
+        state.isSuccess = false;
       }
     });
   },
