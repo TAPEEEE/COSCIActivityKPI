@@ -73,11 +73,22 @@ const RegisterPages: React.FC<any> = () => {
                       ) : null}
                       {teacherUploadReducer.isError && (
                         <div
-                          className="bg-red-100 text-red-700 px-4 py-3 rounded relative"
+                          className="bg-red-100 text-red-700 px-4 py-3 rounded relative mt-2"
                           role="alert"
                         >
                           <span className="block sm:inline">
                             กรอกชื่อผู้ใช้ไม่ถูกต้อง
+                          </span>
+                        </div>
+                      )}
+
+                      {teacherUploadReducer.isSuccess && (
+                        <div
+                          className="bg-red-100 text-red-700 px-4 py-3 rounded relative mt-2"
+                          role="alert"
+                        >
+                          <span className="block sm:inline">
+                            ชื่อผู้ใช้ถูกสมัครไปแล้ว
                           </span>
                         </div>
                       )}

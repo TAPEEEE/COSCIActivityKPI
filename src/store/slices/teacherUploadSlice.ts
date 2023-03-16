@@ -43,9 +43,7 @@ const TeacherUploadSlice = createSlice({
         state.isError = false;
         state.isSuccess = false;
         state.teacherUploadResult = action.payload;
-      } else if (
-        action.payload.message === 'Request failed with status code 403'
-      ) {
+      } else if (action.payload.result === 'nOK') {
         state.isFind = false;
         state.isError = false;
         state.isSuccess = true;

@@ -6,8 +6,8 @@ import {
   NOT_CONNECT_NETWORK,
   NETWORK_CONNECTION_MESSAGE,
 } from '../constants';
-// import { store } from "../store/store";
-// import { logout, relogin } from "../store/slices/authSlice";
+import { store } from '../store/store';
+import { logout, relogin, getTeacher } from '../store/slices/authSlice';
 
 const isAbsoluteURLRegex = /^(?:\w+:)\/\//;
 
@@ -44,7 +44,7 @@ axios.interceptors.response.use(
       return axios.request(error.config);
     } else if (error.response.status === 403) {
       // force logout
-      // dispatch(logout());
+      // dispatch(getTeacher());
     }
 
     if (axios.isCancel(error)) {

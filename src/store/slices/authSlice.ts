@@ -97,6 +97,9 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: initial,
   reducers: {
+    getTeacher: (state, action: PayloadAction<void>) => {
+      state.isError = true;
+    },
     logout: (state, action: PayloadAction<void>) => {
       state.isAuthented = false;
       state.isError = false;
