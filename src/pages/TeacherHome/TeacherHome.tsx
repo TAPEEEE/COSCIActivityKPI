@@ -1,9 +1,12 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Footer from '../../components/Footer';
 import TeacherNavbar from '../../components/teacher/TeacherNavbar';
 import KPICards from '../../components/teacher/KPICards';
 import './TeacherHome.css';
 import '../../scss/KPIHome.scss';
+import { useAppDispatch } from '../../store/store';
+import { useSelector } from 'react-redux';
+import { getKpi, kpiSelector } from '../../store/slices/kpiSlice';
 
 type StudentHomeProps = {
   //
@@ -45,6 +48,17 @@ const data = [
 ];
 
 const StudentHome: React.FC<any> = () => {
+  const dispatch = useAppDispatch;
+  const kpiReducer = useSelector(kpiSelector);
+
+  useEffect(() => {
+    dispatch(getKpi());
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log(kpiReducer.kpiAllResult);
+  });
+
   return (
     <>
       <body className="w-screen h-screen bgimg overflow-auto">

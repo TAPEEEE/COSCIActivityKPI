@@ -14,6 +14,8 @@ import RegisterPages from './pages/RegisterPages';
 import AdminActivityDashboard from './pages/AdminActivityDashboard';
 import AdminRequestDashboard from './pages/AdminRequestDashboard';
 import TeacherHome from './pages/TeacherHome';
+import AdminAddActivity from './pages/AdminAddActivity';
+import TeacherKPIDetail from './pages/TeacherKPIDetail';
 
 export default function App() {
   const authReducer = useSelector(authSelector);
@@ -32,19 +34,35 @@ export default function App() {
           element={<ProtectedRoutes isAuthented={authReducer.isAuthented} />}
         >
           <Route
-            path="/admin-request-dashboard"
-            element={<AdminRequestDashboard />}
-          />
-          <Route path="/" element={<TeacherHome />} />
-          <Route
-            path="/admin-activity-dashboard"
-            element={<AdminActivityDashboard />}
-          />
+            path="/"
+            element={<AdminRoutes isAdmin={authReducer.isAdmin} />}
+          >
+            <Route
+              path="/admin-request-dashboard"
+              element={<AdminRequestDashboard />}
+            />
+            <Route path="/admin-add-activity" element={<AdminAddActivity />} />
+            {/* <Route path="/" element={<TeacherHome />} /> */}
+            <Route
+              path="/admin-activity-dashboard"
+              element={<AdminActivityDashboard />}
+            />
+            <Route
+              path="/"
+              element={<Navigate to="/admin-activity-dashboard" />}
+            />
+          </Route>
+          {/* --------------------------------------------------------------------------------------------------------------------------------------------------------- */}
           <Route
             path="/"
-            element={<Navigate to="/admin-activity-dashboard" />}
-          />
+            element={<TeacherRoute isTeacher={authReducer.isTeacher} />}
+          >
+            <Route path="/teacherhome" element={<TeacherHome />} />
+            <Route path="/teacher/kpi/:id" element={<TeacherKPIDetail />} />
+            <Route path="/" element={<Navigate to="/teacherhome" />} />
+          </Route>
         </Route>
+
         <Route
           path="/"
           element={<PublicRoutes isAuthented={authReducer.isAuthented} />}

@@ -174,7 +174,7 @@ const TeacherRegisterInterface: FC<PreFilledProps> = (props) => {
           รหัสผ่าน
         </label>
         <input
-          type="text"
+          type="password"
           id="password"
           name="password"
           onChange={formik.handleChange}
@@ -193,7 +193,7 @@ const TeacherRegisterInterface: FC<PreFilledProps> = (props) => {
           ยืนยันรหัสผ่าน
         </label>
         <input
-          type="text"
+          type="password"
           id="confirmpassword"
           name="confirmpassword"
           onChange={formik.handleChange}

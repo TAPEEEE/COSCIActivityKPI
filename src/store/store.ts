@@ -3,10 +3,12 @@ import { useDispatch } from 'react-redux';
 
 import authReducer from './slices/authSlice';
 import teacherUploadReducer from './slices/teacherUploadSlice';
+import kpiReducer from './slices/kpiSlice';
 
 const reducer = {
   authReducer,
   teacherUploadReducer,
+  kpiReducer,
 };
 
 export const store = configureStore({

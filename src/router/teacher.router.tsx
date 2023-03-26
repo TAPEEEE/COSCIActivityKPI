@@ -5,8 +5,8 @@ type Props = {
   isTeacher: boolean;
 };
 
-const AdminRoutes = ({ isTeacher }: Props) => {
-  return isTeacher ? <Outlet /> : <Navigate to="/login" />;
+const TeacherRoutes = ({ isTeacher }: Props) => {
+  return isTeacher ? <Outlet /> : <Navigate to="/teacherhome" />;
 };
 
-export default AdminRoutes;
+export default TeacherRoutes;

@@ -29,19 +29,20 @@ axios.interceptors.response.use(
     return response;
   },
   async (error) => {
-    // const { dispatch } = store;
+    const { dispatch } = store;
     console.log(JSON.stringify(error, undefined, 2));
 
     if (error.response.status === 401) {
-      const refreshToken = localStorage.getItem(server.REFRESH_TOKEN_KEY);
-      const refreshUrl = `${apiUrl}/${server.REFRESH_TOKEN_URL}`;
-      let result = await axios.post(refreshUrl, { refreshToken });
+      // const refreshToken = localStorage.getItem(server.REFRESH_TOKEN_KEY);
+      // const refreshUrl = `${apiUrl}/${server.REFRESH_TOKEN_URL}`;
+      // let result = await axios.post(refreshUrl, { refreshToken });
 
-      const token = result.data.jwt;
-      localStorage.setItem(server.TOKEN_KEY, token);
-      // dispatch(relogin());
+      // const token = result.data.jwt;
+      // localStorage.setItem(server.TOKEN_KEY, token);
 
-      return axios.request(error.config);
+      dispatch(logout());
+
+      // return axios.request(error.config);
     } else if (error.response.status === 403) {
       // force logout
       // dispatch(getTeacher());

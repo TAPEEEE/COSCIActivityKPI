@@ -7,7 +7,7 @@ import { logout } from '../../store/slices/authSlice';
 
 const navigation = [
   { name: 'หน้าแรก', href: '/teacher-home' },
-  { name: 'ตรวจสอบกิจกรรม', href: '/teacher-kpi-export' },
+  { name: 'ตรวจสอบกิจกรรม', href: '/admin-activity-dashboard' },
   { name: 'ประวัติคำร้อง', href: '/teacher-kpi-history' },
 ];
 

@@ -121,7 +121,11 @@ const authSlice = createSlice({
           data: user,
         };
         state.isAuthented = true;
-        console.log(user);
+        if (user.role === 'admin') {
+          state.isAdmin = true;
+        } else {
+          state.isTeacher = true;
+        }
       }
       state.isAuthenticating = false;
     },

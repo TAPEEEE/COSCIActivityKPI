@@ -1,5 +1,5 @@
 .ant-modal-mask {
-  background-color: rgba(0, 0, 0, 0.3) !important;
+  background-color: rgba(0, 0, 0, 0.162) !important;
 }
 .ant-modal {
   width: 700px !important;
@@ -15,5 +15,16 @@
   }
   .ant-modal-body {
     font-size: 20px !important;
+  }
+  .ant-btn-primary {
+    background-color: green !important;
+  }
+
+  .ant-btn-primary:hover {
+    background-color: rgb(123, 195, 123) !important;
+  }
+
+  .ant-btn-default:hover {
+    background-color: rgb(211, 72, 56) !important;
   }
 }

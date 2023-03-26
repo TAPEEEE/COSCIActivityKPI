@@ -5,25 +5,16 @@ import ActivityTable from '../../components/admin/ActivityTable';
 import ActivityStatCard from '../../components/admin/ActivityStatCard';
 import KPITable from '../../components/admin/KPITable';
 import AdminNavbar from '../../components/admin/AdminNavbar';
+import { Modal, DatePicker } from 'antd';
 
 type AdminActivityDashboardProps = {
   //
 };
 
-const event = {
-  _id: 'string',
-  name_event: 'string',
-  event_type: 'string',
-  event_img: 'string',
-  event_status: true,
-};
-
 const AdminActivityDashboard: FC = () => {
   const navigate = useNavigate();
-
-  function handleClick() {
-    navigate('/admin-add-activity');
-  }
+  const [open, setOpen] = useState(false);
+  const { RangePicker } = DatePicker;
 
   return (
     <>
@@ -42,6 +33,33 @@ const AdminActivityDashboard: FC = () => {
           <ActivityStatCard />
         </div>
 
+        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 bg-white my-8 shadow-md rounded-lg">
+          <div className="flex justify-between">
+            <h1 className="font-Kanit font-medium text-2xl mx-5 my-5">
+              กิจกรรมบุคลากร
+            </h1>
+            <button
+              onClick={() => navigate('/admin-add-activity')}
+              type="button"
+              className="font-Kanit mt-4 mb-4 mr-4 inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-900 focus:ring-offset-2"
+            >
+              เพิ่มกิจกรรม
+            </button>
+          </div>
+
+          <div className="mx-5 my-5">
+            <div className="flex flex-col">
+              <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8 ">
+                  <div className="overflow-hidden rounded-lg">
+                    <KPITable />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="mx-3">
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 bg-white my-8 shadow-md rounded-lg">
             <div className="flex justify-between">
@@ -49,7 +67,7 @@ const AdminActivityDashboard: FC = () => {
                 กิจกรรมนิสิต
               </h1>
               <button
-                onClick={handleClick}
+                onClick={() => navigate('/admin-add-activity')}
                 type="button"
                 className="font-Kanit mt-4 mb-4 mr-4 inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-900 focus:ring-offset-2"
               >
@@ -63,33 +81,6 @@ const AdminActivityDashboard: FC = () => {
                   <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8 ">
                     <div className="overflow-hidden rounded-lg">
                       <ActivityTable />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 bg-white my-8 shadow-md rounded-lg">
-            <div className="flex justify-between">
-              <h1 className="font-Kanit font-medium text-2xl mx-5 my-5">
-                กิจกรรมบุคลากร
-              </h1>
-              <button
-                onClick={handleClick}
-                type="button"
-                className="font-Kanit mt-4 mb-4 mr-4 inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-900 focus:ring-offset-2"
-              >
-                เพิ่มกิจกรรม
-              </button>
-            </div>
-
-            <div className="mx-5 my-5">
-              <div className="flex flex-col">
-                <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                  <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8 ">
-                    <div className="overflow-hidden rounded-lg">
-                      <KPITable />
                     </div>
                   </div>
                 </div>

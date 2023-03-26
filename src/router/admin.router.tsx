@@ -6,7 +6,7 @@ type Props = {
 };
 
 const AdminRoutes = ({ isAdmin }: Props) => {
-  return isAdmin ? <Outlet /> : <Navigate to="/login" />;
+  return isAdmin ? <Outlet /> : <Navigate to="/teacherhome" />;
 };
 
 export default AdminRoutes;

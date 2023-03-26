@@ -7,6 +7,7 @@ import {
   SafetyCertificateFilled,
   TagFilled,
   DeleteFilled,
+  InfoCircleOutlined,
 } from '@ant-design/icons';
 import type {
   ColumnsType,
@@ -16,8 +17,6 @@ import type {
 } from 'antd/es/table/interface';
 import './AdminComponentSCSS/CustomModal.scss';
 import './AdminComponentSCSS/ActivityTable.scss';
-import RequsetModal from './RequestModal';
-import { keys } from '@mui/system';
 
 interface user {
   id_user: string;
@@ -65,21 +64,21 @@ const StudentRequestTable: FC = () => {
     {
       key: '9456',
       student_id: 63130010046,
-      name: 'ณัฏฐพล สุวรรโณ',
+      name: 'ณัฏฐพล สุวรรโณ1',
       event_name: 'ลอยกระทง',
       status: 'กำลังดำเนินการ',
     },
     {
       key: '4416',
       student_id: 63130010047,
-      name: 'ณัฏฐพล สุวรรโณ',
+      name: 'ณัฏฐพล สุวรรโณ2',
       event_name: 'ลอยกระทง',
       status: 'รับเรื่อง',
     },
     {
       key: '9455',
       student_id: 63130010048,
-      name: 'ณัฏฐพล สุวรรโณ',
+      name: 'ณัฏฐพล สุวรรโณ3',
       event_name: 'ลอยกระทง',
       status: 'รับเรื่อง',
     },
@@ -117,20 +116,9 @@ const StudentRequestTable: FC = () => {
     Record<string, FilterValue | null>
   >({});
   const [sortedInfo, setSortedInfo] = useState<SorterResult<DataType>>({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCurrentFilter, setIsCurrentFilter] = useState<boolean>(false);
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+  const { confirm } = Modal;
 
   const handleChange: TableProps<DataType>['onChange'] = (
     pagination,
@@ -209,7 +197,6 @@ const StudentRequestTable: FC = () => {
       title: 'ชื่อผู้ยื่นคำร้อง',
       dataIndex: 'name',
       key: 'name',
-      width: '25%',
     },
     {
       title: 'ชื่อกิจกรรม',
@@ -220,6 +207,7 @@ const StudentRequestTable: FC = () => {
       title: 'สถานะ',
       dataIndex: 'status',
       key: 'status',
+      width: '15%',
       filters: [
         { text: 'รับเรื่อง', value: 'รับเรื่อง' },
         { text: 'รอดำเนินการ', value: 'รอดำเนินการ' },
@@ -241,59 +229,65 @@ const StudentRequestTable: FC = () => {
           <Space size="small">
             <button
               type="button"
-              onClick={showModal}
-              className="font-Kanit inline-flex items-center rounded-md border border-transparent bg-amber-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-amber-600"
+              className="font-Kanit inline-flex items-center rounded-md border border-transparent bg-green-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-600"
             >
               รับคำร้อง
             </button>
-            <Modal
-              centered={true}
-              title={`คำร้องที่  #${record.key}`}
-              open={isModalOpen}
-              onOk={handleOk}
-              onCancel={handleCancel}
-              footer={
-                <div className="flex justify-end mt-10">
-                  <button className="mr-2 font-Kanit inline-flex items-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-md font-medium text-white shadow-sm hover:bg-red-400 h-12">
-                    ปฎิเสธคำร้อง
-                  </button>
-                  <button className="font-Kanit inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-md font-medium text-white shadow-sm hover:bg-green-500 h-12">
-                    รับคำร้อง
-                  </button>
-                </div>
-              }
-            >
-              <p className="font-semibold mt-8 text-lg">
-                {`ผู้ยื่นคำร้อง : `}
-                <span className="font-normal ml-2">{record.name}</span>
-              </p>
-              <p className="font-semibold mt-2 text-lg">
-                {`กิจกรรมที่เข้าร่วม : `}
-                <span className="font-normal ml-2">{`COSCI FESTIVAL (CO-FEST) : Chapter 3 - Neon Cosiety`}</span>
-              </p>
-              <p className="font-semibold mt-2 text-lg">
-                {`หมวดหมู่กิจกรรม : `}
-                <span className="ml-2 bg-red-200 text-red-800 text-lg font-medium mr-2 px-2.5 py-0.5 rounded-full">
-                  หมวดศิลปะวัฒนธรรม
-                </span>
-              </p>
-              <p className="font-semibold mt-2 text-lg">
-                {`จำนวนชั่วโมง : `}
-                <span className="font-normal ml-2">{`-`}</span>
-              </p>
-              <p className="font-semibold mt-2 text-lg">
-                {`วันที่เข้าร่วม : `}
-                <span className="font-normal ml-2">{``}</span>
-              </p>
-              <p className="font-semibold mt-8 text-lg">
-                {`หลักฐานการเข้าร่วมกิจกรรม `}
-              </p>
 
-              <Image
-                className="mt-2 rounded-lg"
-                src="http://cosci.swu.ac.th/storage/blogs/MEnDnGAI0AhTCbhWR6D8rZi1hUAw5bedxWQU1ZG4.png"
-              />
-            </Modal>
+            <button
+              type="button"
+              onClick={() => {
+                confirm({
+                  title: `คำร้องที่  #${record.key}`,
+                  content: (
+                    <>
+                      <p className="font-semibold mt-8 text-lg">
+                        {`ผู้ยื่นคำร้อง : `}
+                        <span className="font-normal ml-2">{record.name}</span>
+                      </p>
+                      <p className="font-semibold mt-2 text-lg">
+                        {`กิจกรรมที่เข้าร่วม : `}
+                        <span className="font-normal ml-2">{`${record.event_name}`}</span>
+                      </p>
+                      <p className="font-semibold mt-2 text-lg">
+                        {`หมวดหมู่กิจกรรม : `}
+                        <span className="ml-2 bg-red-200 text-red-800 text-lg font-medium mr-2 px-2.5 py-0.5 rounded-full">
+                          หมวดศิลปะวัฒนธรรม
+                        </span>
+                      </p>
+                      <p className="font-semibold mt-2 text-lg">
+                        {`จำนวนชั่วโมง : `}
+                        <span className="font-normal ml-2">{`-`}</span>
+                      </p>
+                      <p className="font-semibold mt-2 text-lg">
+                        {`วันที่เข้าร่วม : `}
+                        <span className="font-normal ml-2">{``}</span>
+                      </p>
+                      <p className="font-semibold mt-8 text-lg">
+                        {`หลักฐานการเข้าร่วมกิจกรรม `}
+                      </p>
+
+                      <Image
+                        className="mt-2 rounded-lg"
+                        src="http://cosci.swu.ac.th/storage/blogs/MEnDnGAI0AhTCbhWR6D8rZi1hUAw5bedxWQU1ZG4.png"
+                      />
+                    </>
+                  ),
+                  okText: 'รับคำร้อง',
+                  okType: 'primary',
+                  cancelText: 'ปฏิเสธคำร้อง',
+                  onOk() {
+                    console.log('OK');
+                  },
+                  onCancel() {
+                    console.log('Cancel');
+                  },
+                });
+              }}
+              className="font-Kanit inline-flex items-center rounded-md border border-transparent bg-amber-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-amber-600"
+            >
+              Detail
+            </button>
           </Space>
         </>
       ),

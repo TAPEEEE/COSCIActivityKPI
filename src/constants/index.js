@@ -23,6 +23,7 @@ export const imageUrl = 'http://localhost:8081';
 
 export const server = {
   LOGIN_URL: `auth/login-teacher`,
+  GET_KPI: `teacher/kpi-active`,
   TEACHER_OTP: `auth/verifyteacher`,
   GET_TEAHER_INFOMATION: `auth/getteacher-uploaded`,
   REFRESH_TOKEN_URL: `refresh/token`,
