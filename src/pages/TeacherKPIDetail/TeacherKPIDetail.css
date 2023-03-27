@@ -1,0 +1,66 @@
+.bgimg {
+  background-image: url('../../assets/building.png'),
+    url('../../assets/COSCI.png'), url('../../assets/Vector.png'),
+    url('../../assets/Vector.png');
+  background-position: bottom left 10%, center left, top -45% center,
+    bottom -60% right -10%;
+  background-repeat: no-repeat;
+  background-size: 42%, 9%, 20%, 40%;
+  @apply bg-[#007CB7];
+}
+
+@media screen and (min-width: 280px) {
+  .bgimg {
+    background-position: bottom left, center left, top -40% right -10%,
+      bottom -60% right -10%;
+    background-size: 90%, 30%, 10%, 0%;
+  }
+}
+
+@media screen and (min-width: 380px) {
+  .bgimg {
+    background-position: bottom left, center left, top -40% right -10%,
+      bottom -60% right -10%;
+    background-size: 90%, 30%, 10%, 0%;
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .bgimg {
+    background-position: bottom left 20%, center left, top -40% right -10%,
+      bottom -60% right -10%;
+    background-size: 70%, 10%, 10%, 0%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .bgimg {
+    background-position: bottom left 10%, center left, top -60% center,
+      bottom -75% right -10%;
+    background-size: 60%, 9%, 25%, 40%;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .bgimg {
+    background-position: bottom left 15%, center left, top -50% center,
+      bottom -75% right -10%;
+    background-size: 50%, 9%, 25%, 40%;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .bgimg {
+    background-position: bottom left 20%, center left, top -50% center,
+      bottom -90% right -10%;
+    background-size: 42%, 9%, 25%, 40%;
+  }
+}
+
+@media all and (orientation: portrait) {
+  .bgimg {
+    background-position: bottom left 10%, center left, top -50% center,
+      bottom -75% right -10%;
+    background-size: 90%, 20%, 25%, 40%;
+  }
+}

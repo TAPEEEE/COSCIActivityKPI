@@ -1,21 +1,24 @@
 export interface KpiResult {
   result: string;
   message: string;
-  data: KpiList;
+  data: dataKpi;
+}
+
+export interface dataKpi {
+  data: KpiList[];
 }
 
 export interface KpiList {
-  data: {
-    _id?: string;
-    name_event?: string;
-    detail_event?: string;
-    start_date?: string;
-    end_date?: string;
-    posted_timestamp?: string;
-    event_type?: string;
-    event_img?: string;
-    activity_hour?: number;
-    event_status?: boolean;
-    permissions_type?: string;
-  };
+  _id?: string;
+  name_event?: string;
+  detail_event?: string;
+  start_date?: string;
+  end_date?: string;
+  posted_timestamp?: string;
+  event_type?: string;
+  event_img?: string;
+  event_img_list?: string[];
+  activity_hour?: number;
+  event_status?: boolean;
+  permissions_type?: string;
 }
