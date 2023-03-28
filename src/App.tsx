@@ -58,7 +58,7 @@ export default function App() {
             element={<TeacherRoute isTeacher={authReducer.isTeacher} />}
           >
             <Route path="/teacherhome" element={<TeacherHome />} />
-            <Route path="/teacher/kpi/id" element={<TeacherKPIDetail />} />
+            <Route path="/teacher/event/:id" element={<TeacherKPIDetail />} />
             <Route path="/" element={<Navigate to="/teacherhome" />} />
           </Route>
         </Route>

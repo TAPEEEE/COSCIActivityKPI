@@ -8,17 +8,19 @@ import { KpiList, KpiResult } from '../../types/teacherKpiType';
 
 export interface KpiState {
   kpiAllResult: KpiList[];
+  kpiOneResult: KpiList | null;
 }
 
 const initialState: KpiState = {
   kpiAllResult: [],
+  kpiOneResult: null,
 };
 
 // Add
 export const addKpi = createAsyncThunk(
   'kpi/add',
   async (formData: FormData) => {
-    await httpClient.post(server.PRODUCT_URL, formData);
+    await httpClient.post(server.ADD_KPI, formData);
     history.back();
     store.dispatch(getKpi());
   },
@@ -40,20 +42,28 @@ export const getKpi = createAsyncThunk(
   },
 );
 
-// Delete
-export const deleteKpi = createAsyncThunk(
-  'stock/delete',
-  async (id: string) => {
-    await httpClient.delete(`${server.PRODUCT_URL}/id/${id}`);
-    store.dispatch(getKpi());
+export const getKPIById = createAsyncThunk(
+  'kpi/getById',
+  async (id: string): Promise<KpiList> => {
+    const result = await await httpClient.get(`${server.GET_SINGLE_KPI + id}`);
+    return result.data.data;
   },
 );
+
+// Delete
+// export const deleteKpi = createAsyncThunk(
+//   'stock/delete',
+//   async (id: string) => {
+//     await httpClient.delete(`${server.PRODUCT_URL}/id/${id}`);
+//     store.dispatch(getKpi());
+//   },
+// );
 
 // Edit
 export const editProdcut = createAsyncThunk(
   'kpi/edit',
   async (formData: any) => {
-    await httpClient.put(server.PRODUCT_URL, formData);
+    await httpClient.patch(server.EDIT_KPI, formData);
     history.back();
   },
 );
@@ -66,6 +76,9 @@ const stockSlice = createSlice({
     // getKpi
     builder.addCase(getKpi.fulfilled, (state, action) => {
       state.kpiAllResult = action.payload;
+    });
+    builder.addCase(getKPIById.fulfilled, (state, action) => {
+      state.kpiOneResult = action.payload;
     });
   },
 });

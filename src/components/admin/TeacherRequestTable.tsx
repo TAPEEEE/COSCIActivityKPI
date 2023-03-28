@@ -16,8 +16,6 @@ import type {
 } from 'antd/es/table/interface';
 import './AdminComponentSCSS/CustomModal.scss';
 import './AdminComponentSCSS/ActivityTable.scss';
-import RequsetModal from './RequestModal';
-import { keys } from '@mui/system';
 
 interface user {
   id_user: string;

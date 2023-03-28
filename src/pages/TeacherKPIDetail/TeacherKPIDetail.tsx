@@ -1,12 +1,27 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import './TeacherKPIDetail.css';
 import Footer from '../../components/Footer';
 import TeacherNavbar from '../../components/teacher/TeacherNavbar';
+import { useMatch } from 'react-router-dom';
+import { getKPIById, kpiSelector } from '../../store/slices/kpiSlice';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../store/store';
+import moment from 'moment';
 type TeacherKPIDetailProps = {
   //
 };
 
 const TeacherKPIDetail: FC = () => {
+  const match = useMatch('/teacher/event/:id');
+  const dispatch = useAppDispatch();
+  const kpiReducer = useSelector(kpiSelector);
+  useEffect(() => {
+    if (match?.params.id) {
+      dispatch(getKPIById(match?.params.id));
+      console.log(kpiReducer.kpiOneResult?.event_img_list);
+    }
+  }, [dispatch, match?.params.id]);
+
   return (
     <>
       <div className="w-screen h-screen bgimg overflow-auto">
@@ -47,13 +62,11 @@ const TeacherKPIDetail: FC = () => {
                     <div className="overflow-hidden rounded-lg">
                       <div className="block rounded-lg shadow-lg max-w-100 p-6 font-Kanit lg:px-16">
                         <h1 className="font-Kanit text-[#1f2937] font-medium text-xl my-4 sm:text-md mb-8">
-                          เตรียมพบกับการถ่ายทอดสด
-                          การริมสุขภาวะนวัตกรรมที่ดีในหัวข้อ Ready Warm up
-                          Workout!
+                          {kpiReducer.kpiOneResult?.name_event}
                         </h1>
                         <div className="flex justify-center">
                           <img
-                            src="https://via.placeholder.com/1080x1080/eee?text=1:1"
+                            src={kpiReducer.kpiOneResult?.event_img}
                             alt="tailwind logo"
                             className="rounded-xl w-full lg:w-2/4 md:w-2/4 xl:w-2/4 2xl:w-2/4"
                           />
@@ -62,10 +75,11 @@ const TeacherKPIDetail: FC = () => {
                         <div className="hidden md:block">
                           <div className="flex items-center">
                             <span className="text-md text-gray-500 mt-1">
-                              {/* {`${moment(start_date).format('ll')} - ${moment(
-                                  end_date,
-                                ).format('ll')}`} */}
-                              24 Jan 2020 - 21 Jan 2020
+                              {`${moment(
+                                kpiReducer.kpiOneResult?.start_date,
+                              ).format('ll')} - ${moment(
+                                kpiReducer.kpiOneResult?.end_date,
+                              ).format('ll')}`}
                             </span>
                           </div>
                         </div>

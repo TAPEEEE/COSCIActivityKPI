@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Footer from '../../components/Footer';
 import TeacherNavbar from '../../components/teacher/TeacherNavbar';
 import KPICards from '../../components/teacher/KPICards';
 import './TeacherHome.css';
 import '../../scss/KPIHome.scss';
-import { deleteKpi, getKpi, kpiSelector } from '../../store/slices/kpiSlice';
+import { getKpi, kpiSelector } from '../../store/slices/kpiSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store/store';
 
@@ -15,10 +15,6 @@ const StudentHome: React.FC<any> = () => {
   useEffect(() => {
     dispatch(getKpi());
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log(kpiReducer.kpiAllResult);
-  });
 
   return (
     <>
@@ -38,12 +34,14 @@ const StudentHome: React.FC<any> = () => {
               <div className="mx-5 py-5 sm:px-6 lg:px-8 mt-8">
                 {kpiReducer.kpiAllResult.map((item) => (
                   <KPICards
-                    key={item.name_event}
+                    key={item._id}
+                    id={item._id}
                     name_event={item.name_event}
                     event_type={item.event_type}
                     detail_event={item.detail_event}
                     start_date={item.start_date}
                     end_date={item.end_date}
+                    event_img={item.event_img}
                   />
                 ))}
               </div>

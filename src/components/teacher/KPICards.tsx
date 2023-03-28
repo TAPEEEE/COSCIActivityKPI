@@ -4,7 +4,7 @@ import Moment from 'react-moment';
 import { useNavigate } from 'react-router-dom';
 
 interface CardProps {
-  _id?: string;
+  id?: string;
   name_event?: string;
   detail_event?: string;
   start_date?: string;
@@ -26,16 +26,13 @@ const KPICards: FC<CardProps> = (props) => {
     start_date,
     end_date,
     event_img,
+    id,
   } = props;
 
   return (
     <div className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 md:max-w-4xl mx-auto border border-white bg-white mb-14 font-Kanit">
       <div className="w-full md:w-3/6 bg-white grid place-items-center">
-        <img
-          src="https://via.placeholder.com/1080x1080/eee?text=1:1"
-          alt="tailwind logo"
-          className="rounded-xl"
-        />
+        <img src={event_img} alt={event_img} className="rounded-xl" />
       </div>
       <div className="w-full md:w-2/3 bg-white flex flex-col  p-3">
         <div className="flex justify-between item-center mb-2">
@@ -64,7 +61,7 @@ const KPICards: FC<CardProps> = (props) => {
             {detail_event}
           </p>
           <button
-            onClick={() => navigate('/teacher/kpi/id')}
+            onClick={() => navigate(`/teacher/event/${id}`)}
             type="button"
             className="w-full md:w-60 text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4 font-medium rounded-xl text-base px-5 py-2.5 text-center"
           >
