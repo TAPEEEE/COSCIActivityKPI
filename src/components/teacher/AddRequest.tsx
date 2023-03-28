@@ -1,6 +1,7 @@
 import React, { FC, memo } from 'react';
 import { DatePicker, Empty, Modal } from 'antd';
 import '../../assets/css/Components.css';
+import './TeacherComponentSCSS/ModalComponent.scss';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, Upload, message } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
@@ -172,7 +173,10 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
                         </div>
                       ))
                     ) : (
-                      <Empty description={'ไม่มีรูปภาพจากส่วนกลาง'} />
+                      <Empty
+                        className="mb-3"
+                        description={'ไม่มีรูปภาพจากส่วนกลาง'}
+                      />
                     )}
                   </Image.PreviewGroup>
                 </>
