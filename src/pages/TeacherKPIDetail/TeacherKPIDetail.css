@@ -64,3 +64,9 @@
     background-size: 90%, 20%, 25%, 40%;
   }
 }
+
+.scrolling {
+  overflow-y: hidden;
+  overflow-x: scroll;
+  white-space: nowrap;
+}

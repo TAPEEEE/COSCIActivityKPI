@@ -16,6 +16,7 @@ import AdminRequestDashboard from './pages/AdminRequestDashboard';
 import TeacherHome from './pages/TeacherHome';
 import AdminAddActivity from './pages/AdminAddActivity';
 import TeacherKPIDetail from './pages/TeacherKPIDetail';
+import TeacherAddRequest from './pages/TeacherAddRequest';
 
 export default function App() {
   const authReducer = useSelector(authSelector);
@@ -58,6 +59,10 @@ export default function App() {
             element={<TeacherRoute isTeacher={authReducer.isTeacher} />}
           >
             <Route path="/teacherhome" element={<TeacherHome />} />
+            <Route
+              path="/teacher/add-request/:id"
+              element={<TeacherAddRequest />}
+            />
             <Route path="/teacher/event/:id" element={<TeacherKPIDetail />} />
             <Route path="/" element={<Navigate to="/teacherhome" />} />
           </Route>

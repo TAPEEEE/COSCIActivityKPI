@@ -76,6 +76,7 @@ const stockSlice = createSlice({
     // getKpi
     builder.addCase(getKpi.fulfilled, (state, action) => {
       state.kpiAllResult = action.payload;
+      state.kpiOneResult = initialState.kpiOneResult;
     });
     builder.addCase(getKPIById.fulfilled, (state, action) => {
       state.kpiOneResult = action.payload;

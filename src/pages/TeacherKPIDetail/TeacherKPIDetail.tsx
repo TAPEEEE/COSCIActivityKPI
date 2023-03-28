@@ -2,23 +2,28 @@ import React, { FC, useEffect } from 'react';
 import './TeacherKPIDetail.css';
 import Footer from '../../components/Footer';
 import TeacherNavbar from '../../components/teacher/TeacherNavbar';
-import { useMatch } from 'react-router-dom';
+import { useMatch, useNavigate } from 'react-router-dom';
 import { getKPIById, kpiSelector } from '../../store/slices/kpiSlice';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store/store';
 import moment from 'moment';
+import { Empty, Image } from 'antd';
+
 type TeacherKPIDetailProps = {
   //
 };
 
-const TeacherKPIDetail: FC = () => {
+const TeacherKPIDetailRequest: FC = () => {
   const match = useMatch('/teacher/event/:id');
   const dispatch = useAppDispatch();
   const kpiReducer = useSelector(kpiSelector);
+  const navigate = useNavigate();
   useEffect(() => {
     if (match?.params.id) {
       dispatch(getKPIById(match?.params.id));
-      console.log(kpiReducer.kpiOneResult?.event_img_list);
+    } else {
+      console.log(false);
+      navigate('/teacherhome');
     }
   }, [dispatch, match?.params.id]);
 
@@ -58,40 +63,94 @@ const TeacherKPIDetail: FC = () => {
 
               <div className="flex flex-col">
                 <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                  <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8 ">
+                  <div className="inline-block min-w-full sm:px-6 lg:px-8 ">
                     <div className="overflow-hidden rounded-lg">
                       <div className="block rounded-lg shadow-lg max-w-100 p-6 font-Kanit lg:px-16">
-                        <h1 className="font-Kanit text-[#1f2937] font-medium text-xl my-4 sm:text-md mb-8">
+                        <div className="flex justify-end">
+                          <div className="hidden md:block mb-5">
+                            <span className="text-lg text-gray-400">
+                              {`โพสต์เมื่อ ${moment(
+                                kpiReducer.kpiOneResult?.posted_timestamp,
+                              ).format('DD MMMM YYYY เวลา hh:mm')}`}
+                            </span>
+                          </div>
+                        </div>
+                        <h1 className="font-Kanit text-[#00567e] font-medium text-xl sm:text-md mb-5 mt-2">
                           {kpiReducer.kpiOneResult?.name_event}
                         </h1>
-                        <div className="flex justify-center">
+                        <div className="flex justify-center my-8">
                           <img
                             src={kpiReducer.kpiOneResult?.event_img}
-                            alt="tailwind logo"
+                            alt={kpiReducer.kpiOneResult?.event_img}
                             className="rounded-xl w-full lg:w-2/4 md:w-2/4 xl:w-2/4 2xl:w-2/4"
                           />
                         </div>
 
-                        <div className="hidden md:block">
-                          <div className="flex items-center">
-                            <span className="text-md text-gray-500 mt-1">
-                              {`${moment(
-                                kpiReducer.kpiOneResult?.start_date,
-                              ).format('ll')} - ${moment(
-                                kpiReducer.kpiOneResult?.end_date,
-                              ).format('ll')}`}
-                            </span>
-                          </div>
+                        <h1 className="font-Kanit text-gray-500 font-regular text-lg sm:text-md mb-8">
+                          {kpiReducer.kpiOneResult?.detail_event}
+                        </h1>
+
+                        <h1 className="font-Kanit text-[#282e38] font-regular text-lg sm:text-md mb-2">
+                          ประเภทกิจกรรม :
+                          <span
+                            className={`inline-block bg-amber-300 rounded-full px-3  sm:text-md font-regular text-lg text-amber-800 ml-2 `}
+                          >
+                            กิจกรรมเลือก
+                          </span>
+                        </h1>
+                        <h1 className="font-Kanit text-[#282e38] font-regular text-lg sm:text-md mb-2">
+                          {`จำนวนชั่วโมงที่ได้รับ :`}
+                          <span className="text-md text-gray-500 mt-1 ml-2">
+                            {`${kpiReducer.kpiOneResult?.activity_hour} ชั่วโมง`}
+                          </span>
+                        </h1>
+                        <h1 className="font-Kanit text-[#282e38] font-regular text-lg sm:text-md mb-2">
+                          วันเริ่มต้นกิจกรรม :
+                          <span className="text-md text-gray-500 mt-1 ml-2">
+                            {`${moment(kpiReducer.kpiOneResult?.start_date)
+                              .add(543, 'year')
+                              .format('DD MMMM YYYY เวลา hh:mm')}`}
+                          </span>
+                        </h1>
+                        <h1 className="font-Kanit text-[#282e38] font-regular text-lg sm:text-md mb-2">
+                          สิ้นสุดกิจกรรม :
+                          <span className="text-md text-gray-500 mt-1 ml-2">
+                            {`${moment(kpiReducer.kpiOneResult?.end_date)
+                              .add(543, 'year')
+                              .format('DD MMMM YYYY เวลา hh:mm')}`}
+                          </span>
+                        </h1>
+                        <h1 className="font-Kanit text-[#282e38] font-regular text-lg sm:text-md mb-5">
+                          {`รูปภาพกิจกรรม : ${kpiReducer.kpiOneResult?.event_img_list?.length} รูป`}
+                        </h1>
+                        <div className="grid grid-cols-2 gap-5 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 sm:grid-cols-4">
+                          {/* <div className="flex justify-start"> */}
+
+                          <Image.PreviewGroup>
+                            {kpiReducer.kpiOneResult?.event_img_list?.map(
+                              (index) => (
+                                <div className="mx-1" key={index}>
+                                  <Image width={130} src={index} />
+                                </div>
+                              ),
+                            )}
+                          </Image.PreviewGroup>
+                          {/* </div> */}
                         </div>
-                        <span
-                          className={`inline-block bg-amber-300 rounded-full px-3 py-1 text-md font-medium text-amber-800 mr-2 mb-2`}
-                        >
-                          กิจกรรมเลือก
-                        </span>
 
                         <div className="flex justify-center">
-                          <div className="flex justify-between mt-52 space-x-3">
-                            <button>test</button>
+                          <div className="flex justify-between mt-28 space-x-3">
+                            <button
+                              onClick={() =>
+                                navigate(
+                                  `/teacher/add-request/${kpiReducer.kpiOneResult?._id}`,
+                                )
+                              }
+                              type="button"
+                              className="w-full md:w-60 text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4 font-medium rounded-xl text-base px-5 py-2.5 text-center"
+                            >
+                              ลงทะเบียนเข้าร่วมกิจกรรม
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -108,4 +167,4 @@ const TeacherKPIDetail: FC = () => {
   );
 };
 
-export default TeacherKPIDetail;
+export default TeacherKPIDetailRequest;

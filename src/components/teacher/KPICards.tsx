@@ -31,7 +31,7 @@ const KPICards: FC<CardProps> = (props) => {
 
   return (
     <div className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 md:max-w-4xl mx-auto border border-white bg-white mb-14 font-Kanit">
-      <div className="w-full md:w-3/6 bg-white grid place-items-center">
+      <div className="w-full md:w-5/12 bg-white grid place-items-center">
         <img src={event_img} alt={event_img} className="rounded-xl" />
       </div>
       <div className="w-full md:w-2/3 bg-white flex flex-col  p-3">
