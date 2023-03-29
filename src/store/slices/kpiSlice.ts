@@ -68,7 +68,7 @@ export const editProdcut = createAsyncThunk(
   },
 );
 
-const stockSlice = createSlice({
+const kpiSlice = createSlice({
   name: 'kpi',
   initialState: initialState,
   reducers: {},
@@ -85,4 +85,4 @@ const stockSlice = createSlice({
 });
 
 export const kpiSelector = (store: RootState): KpiState => store.kpiReducer;
-export default stockSlice.reducer;
+export default kpiSlice.reducer;

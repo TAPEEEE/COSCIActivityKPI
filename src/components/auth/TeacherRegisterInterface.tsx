@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { teacherUploadSelector } from '../../store/slices/teacherUploadSlice';
 import { useAppDispatch } from '../../store/store';
 import { authSelector, logout, register } from '../../store/slices/authSlice';
-import alertRegister from '../../utils/alertRegister';
+import alertAdd from '../../utils/alertAdd';
 
 interface PreFilledProps {
   object: {
@@ -76,13 +76,9 @@ const TeacherRegisterInterface: FC<PreFilledProps> = (props) => {
       console.log(values);
       await dispatch(register(values));
       if (authReducer.registerResult?.error) {
-        alertRegister(false, 'สมัครสมาชิกไม่สำเร็จ', '');
+        alertAdd(false, 'สมัครสมาชิกไม่สำเร็จ', '');
       } else {
-        alertRegister(
-          true,
-          'สมัครสมาชิกสำเร็จ',
-          'สามารถเข้าสู่ระบบได้จากหน้า Login',
-        );
+        alertAdd(true, 'สมัครสมาชิกสำเร็จ', '');
       }
       await Timer(2000);
       navigate('/login');

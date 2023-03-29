@@ -19,7 +19,7 @@ export const UPLOAD_PHOTO_FAIL_MESSAGE =
   'An error has occurred. The photo was unable to upload.';
 
 export const apiUrl = 'http://localhost:8081/api/';
-export const imageUrl = 'http://localhost:8081';
+export const imageUrl = 'http://localhost:8081/';
 
 export const server = {
   LOGIN_URL: `auth/login-teacher`,
@@ -31,8 +31,9 @@ export const server = {
   GET_SINGLE_KPI: `teacher/event/`,
   EDIT_KPI: `admin/edit-event`,
   ADD_KPI: `admin/add-activity`,
-  // DELETE_KPI: ``,
+  UPLOAD_IMG: `file/uploadimg`,
   TOKEN_KEY: `token`,
   REFRESH_TOKEN_KEY: `refresh_token`,
   RESEND_OTP_TEACHER: `auth/verify/resendteacher`,
+  TEACHER_ADD_REQUEST: `teacher/request`,
 };

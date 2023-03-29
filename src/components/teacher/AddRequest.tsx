@@ -1,16 +1,20 @@
-import React, { FC, memo } from 'react';
+import React, { FC, memo, useEffect, useState } from 'react';
 import { DatePicker, Empty, Modal } from 'antd';
 import '../../assets/css/Components.css';
 import './TeacherComponentSCSS/ModalComponent.scss';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, Upload, message } from 'antd';
-import type { UploadFile } from 'antd/es/upload/interface';
 import { UploadProps, Image } from 'antd';
-import { InboxOutlined } from '@ant-design/icons';
 import moment from 'moment';
-
-const { Dragger } = Upload;
-const fileList: UploadFile[] = [];
+import { imageUrl, server } from '../../constants';
+import { useSelector } from 'react-redux';
+import { authSelector } from '../../store/slices/authSlice';
+import { useAppDispatch } from '../../store/store';
+import * as Yup from 'yup';
+import { Formik, Form, Field } from 'formik';
+import { kpiRequestAdd } from '../../store/slices/kpiRequestSlice';
+import alertAdd from '../../utils/alertAdd';
+import { useNavigate } from 'react-router-dom';
 
 interface RequestKPIProps {
   id_event?: string;
@@ -26,29 +30,95 @@ interface RequestKPIProps {
   uploaded_img?: string[];
 }
 
-const props: UploadProps = {
-  name: 'file',
-  multiple: true,
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  onChange(info) {
-    const { status } = info.file;
-    if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-  onDrop(e) {
-    console.log('Dropped files', e.dataTransfer.files);
-  },
-};
+interface RequestSubmit {
+  id_event?: string;
+  start_date?: string;
+  end_date?: string;
+  status_request?: string;
+  type_request?: string;
+  uploaded_img?: string[];
+  uploaded_pdf?: string;
+}
+
+// const TeacherRequestSchema = Yup.object().shape({
+//   upload_img: Yup.string().required('กรุณาเลือกรูปภาพเพื่อเป็นหลักฐาน'),
+// });
 
 const AddRequest: FC<RequestKPIProps> = (props) => {
-  const { confirm } = Modal;
+  const authReducer = useSelector(authSelector);
+  const navigate = useNavigate();
+  const Timer = (ms: number | undefined) =>
+    new Promise((r) => setTimeout(r, ms));
+  const dispatch = useAppDispatch();
+  const [fileUploadStore, setFileUploadStore] = useState<any[]>([]);
+  const [fileUpload, setFileUpload] = useState<any[]>([]);
+  const [open, setOpen] = useState(false);
+
+  const onModalOK = async () => {
+    const AppenedURL = () => {
+      const a: string[] = [];
+      fileUploadStore.map((item) => {
+        a.push(item.response.data);
+      });
+      return a;
+    };
+    await setFileUpload(AppenedURL);
+    setOpen(false);
+  };
+
+  const handleSubmit = async (value: RequestSubmit) => {
+    await dispatch(kpiRequestAdd(value));
+    alertAdd(true, 'ลงทะเบียนกิจกรรมสำเร็จ', '');
+    await Timer(2000);
+    navigate('/teacherhome');
+  };
+
+  const propsUpload: UploadProps = {
+    name: 'file',
+    action: 'http://localhost:8081/api/file/uploadimg',
+    headers: {
+      authorization: `Bearer ${authReducer.loginResult?.token}`,
+    },
+    listType: 'picture',
+    openFileDialogOnClick: true,
+    beforeUpload: (file) => {
+      const isPNG = file.type === 'image/png';
+      const isJPEG = file.type === 'image/jpeg';
+      const isJPG = file.type === 'image/jpg';
+      const isHEIC = file.type === 'image/heic';
+      if (file.size > 15000000) {
+        message.error(`${file.name} ต้องมีขนาดน้อยกว่า 15MB`);
+        return Upload.LIST_IGNORE;
+      }
+      if (!isPNG && !isJPEG && !isJPG && !isHEIC) {
+        message.error(
+          `${file.name} ต้องเป็นรูปภาพเท่านั้น (PNG, JPEG, JPG, HEIC)`,
+        );
+      }
+      return isPNG || isJPEG || isJPG || isHEIC || Upload.LIST_IGNORE;
+    },
+    onChange(info) {
+      if (info.file.status !== 'uploading') {
+        setFileUploadStore(info.fileList);
+      }
+      if (info.file.status === 'done') {
+        message.success(`${info.file.name} อัพโหลดสำเร็จ`);
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} อัพโหลดไม่สำเร็จ`);
+      }
+      // console.log(fileUploadStore);
+    },
+    progress: {
+      strokeColor: {
+        '0%': '#108ee9',
+        '100%': '#87d068',
+      },
+      strokeWidth: 3,
+      format: (percent) => percent && `${parseFloat(percent.toFixed(2))}%`,
+    },
+  };
   const {
+    id_event,
     user_name,
     user_role,
     user_email,
@@ -60,7 +130,7 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
     end_date,
     uploaded_img,
   } = props;
-  const { RangePicker } = DatePicker;
+
   return (
     <>
       <div className="block rounded-lg shadow-lg bg-white max-w-100 p-6 font-Kanit lg:px-16 mt-8">
@@ -144,53 +214,10 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
           ส่วนที่ 3: อัพโหลดหลักฐานการเข้าร่วมกิจกรรม
         </h3>
         <button
+          type="button"
           className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
           onClick={() => {
-            confirm({
-              title: 'เลือกรูปหลักฐานการเข้าร่วมกิจกรรม',
-              content: (
-                <>
-                  <h1 className="font-Kanit text-gray-800 font-medium text-lg my-4">
-                    อัพโหลดรูปภาพ
-                  </h1>
-                  <Upload
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                    listType="picture"
-                    defaultFileList={[...fileList]}
-                  >
-                    <Button icon={<UploadOutlined />}>
-                      อัพโหลดรูปภาพด้วยตนเอง
-                    </Button>
-                  </Upload>
-                  <h1 className="font-Kanit text-gray-800 font-medium text-lg my-4">
-                    หรือเลือกรูปภาพจากส่วนกลาง :
-                  </h1>
-                  <Image.PreviewGroup>
-                    {uploaded_img?.length ? (
-                      uploaded_img.map((index) => (
-                        <div className="mx-1" key={index}>
-                          <Image width={130} src={index} />
-                        </div>
-                      ))
-                    ) : (
-                      <Empty
-                        className="mb-3"
-                        description={'ไม่มีรูปภาพจากส่วนกลาง'}
-                      />
-                    )}
-                  </Image.PreviewGroup>
-                </>
-              ),
-              okText: 'ยืนยัน',
-              okType: 'primary',
-              cancelText: 'ยกเลิก',
-              onOk() {
-                console.log('OK');
-              },
-              onCancel() {
-                console.log('Cancel');
-              },
-            });
+            setOpen(true);
           }}
         >
           <svg
@@ -202,28 +229,86 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
           </svg>
           <span>คลิกเพื่ออัพโหลดรูปภาพ</span>
         </button>
+        <>
+          <Modal
+            open={open}
+            onOk={() => onModalOK()}
+            afterClose={() => onModalOK()}
+            closable={false}
+            onCancel={async () => {
+              await setFileUpload([]);
+              setOpen(false);
+            }}
+            width={700}
+          >
+            <h1 className="font-Kanit text-gray-800 font-medium text-lg my-4">
+              อัพโหลดรูปภาพ
+            </h1>
+            <Upload {...propsUpload}>
+              <Button icon={<UploadOutlined />}>อัพโหลดรูปภาพด้วยตนเอง</Button>
+            </Upload>
+            <h1 className="font-Kanit text-gray-800 font-medium text-lg my-4">
+              หรือเลือกรูปภาพจากส่วนกลาง :
+            </h1>
+
+            <Image.PreviewGroup>
+              {uploaded_img?.length ? (
+                uploaded_img.map((index) => (
+                  <div className="mx-1 " key={index}>
+                    <Image
+                      className="h-auto max-w-full rounded-lg"
+                      width={130}
+                      src={index}
+                    />
+                  </div>
+                ))
+              ) : (
+                <Empty
+                  className="my-5"
+                  description={'ไม่มีรูปภาพจากส่วนกลาง'}
+                />
+              )}
+            </Image.PreviewGroup>
+          </Modal>
+        </>
+        {fileUpload?.length ? (
+          <>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-5">
+              <Image.PreviewGroup>
+                {fileUpload.map((index) => (
+                  <Image
+                    key={index}
+                    className="object-cover h-24 w-24 rounded-lg"
+                    src={`${imageUrl}${index}`}
+                  />
+                ))}
+              </Image.PreviewGroup>
+            </div>
+          </>
+        ) : (
+          <Empty className="my-5" description={'ยังไม่มีรูปภาพที่อัพโหลด'} />
+        )}
+
         <div className="flex justify-end mt-12">
           <button
             type="submit"
+            onClick={() =>
+              handleSubmit({
+                id_event: id_event,
+                start_date: start_date,
+                end_date: end_date,
+                status_request: 'สำเร็จ',
+                type_request: event_type,
+                uploaded_img: fileUpload.flat(),
+                uploaded_pdf: 'null',
+              })
+            }
             className="w-full md:w-60 text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4 font-medium rounded-xl text-base px-5 py-2.5 text-center"
           >
             ส่งคำร้องลงบันทึกกิจกรรม
           </button>
         </div>
       </div>
-
-      {/* <Dragger {...props} className="mb-5">
-          <p className="ant-upload-drag-icon">
-            <InboxOutlined />
-          </p>
-          <p className="ant-upload-text">
-            Click or drag file to this area to upload
-          </p>
-          <p className="ant-upload-hint">
-            Support for a single or bulk upload. Strictly prohibited from
-            uploading company data or other banned files.
-          </p>
-        </Dragger> */}
     </>
   );
 };

@@ -1,10 +1,6 @@
 import Swal from 'sweetalert2';
 
-export default function alertRegister(
-  icon: boolean,
-  title: string,
-  text: string,
-) {
+export default function alertAdd(icon: boolean, title: string, text: string) {
   if (icon) {
     Swal.fire({
       icon: `success`,
