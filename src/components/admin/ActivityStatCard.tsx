@@ -4,7 +4,6 @@ import '../../assets/css/Components.css';
 import { NavLink } from 'react-router-dom';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import PersonIcon from '@mui/icons-material/Person';
 import { getCurrentDate } from '../../utils/getCurrentDate';
 const CardData = [
   {

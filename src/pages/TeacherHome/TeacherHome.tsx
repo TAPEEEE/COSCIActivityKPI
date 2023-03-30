@@ -8,7 +8,7 @@ import { getKpi, kpiSelector } from '../../store/slices/kpiSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store/store';
 
-const StudentHome: React.FC<any> = () => {
+const TeacherHome: React.FC<any> = () => {
   const kpiReducer = useSelector(kpiSelector);
   const dispatch = useAppDispatch();
 
@@ -26,7 +26,7 @@ const StudentHome: React.FC<any> = () => {
               <div className="bg-[#1f2937] rounded-t-lg">
                 <div className="flex justify-between">
                   <h1 className="font-Kanit text-white font-medium text-lg ml-2 mx-4 my-4 pl-2 sm:text-md">
-                    กิจกรรมนิสิตทั้งหมด
+                    กิจกรรมบุคลากรทั้งหมด
                   </h1>
                 </div>
               </div>
@@ -54,4 +54,4 @@ const StudentHome: React.FC<any> = () => {
   );
 };
 
-export default StudentHome;
+export default TeacherHome;

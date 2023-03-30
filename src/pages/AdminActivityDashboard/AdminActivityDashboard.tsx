@@ -19,7 +19,7 @@ const AdminActivityDashboard: FC = () => {
   return (
     <>
       <AdminNavbar />
-      <body className="h-full bg-gray-100 font-Kanit">
+      <div className="h-full bg-gray-100 font-Kanit">
         <header className="bg-white shadow">
           <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8 font-Kanit">
             <div className="lg:flex lg:justify-between">
@@ -91,7 +91,7 @@ const AdminActivityDashboard: FC = () => {
         <div className="mt-28">
           <Footer />
         </div>
-      </body>
+      </div>
     </>
   );
 };

@@ -33,6 +33,7 @@ export const server = {
   ADD_KPI: `admin/add-activity`,
   UPLOAD_IMG: `file/uploadimg`,
   TOKEN_KEY: `token`,
+  TEACHER_HISTORY: `teacher/request-history`,
   REFRESH_TOKEN_KEY: `refresh_token`,
   RESEND_OTP_TEACHER: `auth/verify/resendteacher`,
   TEACHER_ADD_REQUEST: `teacher/request`,

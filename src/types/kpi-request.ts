@@ -38,6 +38,20 @@ export interface KpiRequestForUsed {
   };
 }
 
+export interface KpiRequestForTable {
+  user?: userData;
+  event?: eventData;
+  start_date?: string;
+  end_date?: string;
+  uploaded_img?: string[];
+  uploaded_pdf?: string;
+  status_request?: string;
+  type_request?: string;
+  permissions_request?: string;
+  _id?: string;
+  date_request?: string;
+}
+
 export interface userData {
   user: {
     id_user: string;

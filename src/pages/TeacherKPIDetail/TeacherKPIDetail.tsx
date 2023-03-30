@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store/store';
 import moment from 'moment';
 import { Empty, Image } from 'antd';
+import { imageUrl } from '../../constants';
 
 type TeacherKPIDetailProps = {
   //
@@ -123,19 +124,21 @@ const TeacherKPIDetailRequest: FC = () => {
                         <h1 className="font-Kanit text-[#282e38] font-regular text-lg sm:text-md mb-5">
                           {`รูปภาพกิจกรรม : ${kpiReducer.kpiOneResult?.event_img_list?.length} รูป`}
                         </h1>
-                        <div className="grid grid-cols-2 gap-5 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 sm:grid-cols-4">
-                          {/* <div className="flex justify-start"> */}
 
+                        {/* <div className="flex justify-start"> */}
+
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-5">
                           <Image.PreviewGroup>
                             {kpiReducer.kpiOneResult?.event_img_list?.map(
                               (index) => (
-                                <div className="mx-1" key={index}>
-                                  <Image width={130} src={index} />
-                                </div>
+                                <Image
+                                  key={index}
+                                  className="object-cover w-auto h-52 rounded-lg"
+                                  src={`${imageUrl}${index}`}
+                                />
                               ),
                             )}
                           </Image.PreviewGroup>
-                          {/* </div> */}
                         </div>
 
                         <div className="flex justify-center">

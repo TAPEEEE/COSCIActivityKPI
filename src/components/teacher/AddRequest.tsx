@@ -40,10 +40,6 @@ interface RequestSubmit {
   uploaded_pdf?: string;
 }
 
-// const TeacherRequestSchema = Yup.object().shape({
-//   upload_img: Yup.string().required('กรุณาเลือกรูปภาพเพื่อเป็นหลักฐาน'),
-// });
-
 const AddRequest: FC<RequestKPIProps> = (props) => {
   const authReducer = useSelector(authSelector);
   const navigate = useNavigate();
@@ -52,17 +48,33 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
   const dispatch = useAppDispatch();
   const [fileUploadStore, setFileUploadStore] = useState<any[]>([]);
   const [fileUpload, setFileUpload] = useState<any[]>([]);
+  const [active, setActive] = useState<string>();
   const [open, setOpen] = useState(false);
+  const secectedArr: string[] = [];
+  const selectedFileUpload = async (ImgName: string) => {
+    for (let i = 0; i < secectedArr.length; i++) {
+      if (ImgName === secectedArr[i]) {
+        secectedArr.splice(i, 1);
+        console.log(secectedArr);
+        // setFileUpload(secectedArr);
+        return;
+      }
+    }
+    secectedArr.push(ImgName);
+    message.success(`${ImgName} อัพโหลดสำเร็จ`);
+    console.log(secectedArr);
+  };
 
   const onModalOK = async () => {
-    const AppenedURL = () => {
-      const a: string[] = [];
-      fileUploadStore.map((item) => {
-        a.push(item.response.data);
-      });
-      return a;
-    };
-    await setFileUpload(AppenedURL);
+    const arr: string[] = [];
+    fileUploadStore.map((item) => {
+      arr.push(item.response.data);
+    });
+    setFileUpload(arr);
+    if (secectedArr) {
+      setFileUpload([...arr, secectedArr]);
+    }
+    console.log(fileUpload.flat(6));
     setOpen(false);
   };
 
@@ -100,6 +112,7 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
     onChange(info) {
       if (info.file.status !== 'uploading') {
         setFileUploadStore(info.fileList);
+        setFileUpload([]);
       }
       if (info.file.status === 'done') {
         message.success(`${info.file.name} อัพโหลดสำเร็จ`);
@@ -233,7 +246,6 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
           <Modal
             open={open}
             onOk={() => onModalOK()}
-            afterClose={() => onModalOK()}
             closable={false}
             onCancel={async () => {
               await setFileUpload([]);
@@ -253,15 +265,18 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
 
             <Image.PreviewGroup>
               {uploaded_img?.length ? (
-                uploaded_img.map((index) => (
-                  <div className="mx-1 " key={index}>
-                    <Image
-                      className="h-auto max-w-full rounded-lg"
-                      width={130}
-                      src={index}
-                    />
+                <>
+                  <div className="grid grid-cols-2 md:grid-cols-2 gap-3 my-5">
+                    {uploaded_img.map((index) => (
+                      <img
+                        onClick={() => selectedFileUpload(index)}
+                        key={index}
+                        className={`object-cover w-auto h-auto rounded-lg focus:ring-blue-700 hover:opacity-70 hover:bg-opacity-95 hover:bg-black`}
+                        src={`${imageUrl}${index}`}
+                      />
+                    ))}
                   </div>
-                ))
+                </>
               ) : (
                 <Empty
                   className="my-5"
@@ -275,10 +290,10 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
           <>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-5">
               <Image.PreviewGroup>
-                {fileUpload.map((index) => (
+                {fileUpload.flat(5).map((index) => (
                   <Image
                     key={index}
-                    className="object-cover h-24 w-24 rounded-lg"
+                    className="object-cover w-auto h-52 rounded-lg"
                     src={`${imageUrl}${index}`}
                   />
                 ))}

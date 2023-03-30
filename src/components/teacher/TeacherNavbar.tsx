@@ -6,9 +6,9 @@ import { useAppDispatch } from '../../store/store';
 import { logout } from '../../store/slices/authSlice';
 
 const navigation = [
-  { name: 'หน้าแรก', href: '/teacher-home' },
+  { name: 'หน้าแรก', href: '/teacherhome' },
   { name: 'ตรวจสอบกิจกรรม', href: '/admin-activity-dashboard' },
-  { name: 'ประวัติคำร้อง', href: '/teacher-kpi-history' },
+  { name: 'ประวัติคำร้อง', href: '/teacherhistory' },
 ];
 
 function classNames(...classes: string[]) {

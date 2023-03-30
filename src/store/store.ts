@@ -5,12 +5,14 @@ import authReducer from './slices/authSlice';
 import teacherUploadReducer from './slices/teacherUploadSlice';
 import kpiReducer from './slices/kpiSlice';
 import kpiRequestReducer from './slices/kpiRequestSlice';
+import kpiHistoryReducer from './slices/kpiHistorySlice';
 
 const reducer = {
   authReducer,
   teacherUploadReducer,
   kpiReducer,
   kpiRequestReducer,
+  kpiHistoryReducer,
 };
 
 export const store = configureStore({
