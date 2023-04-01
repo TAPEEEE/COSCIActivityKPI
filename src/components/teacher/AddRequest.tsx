@@ -54,14 +54,16 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
   const selectedFileUpload = async (ImgName: string) => {
     for (let i = 0; i < secectedArr.length; i++) {
       if (ImgName === secectedArr[i]) {
-        secectedArr.splice(i, 1);
-        console.log(secectedArr);
+        // secectedArr.splice(i, 1);
+        // console.log(secectedArr);
+        message.error(`รูปซ้ำกับเลือกที่รูปไปแล้ว`);
+
         // setFileUpload(secectedArr);
         return;
       }
     }
     secectedArr.push(ImgName);
-    message.success(`${ImgName} อัพโหลดสำเร็จ`);
+    message.success(`อัพโหลดรูปที่ ${secectedArr.length} สำเร็จ`);
     console.log(secectedArr);
   };
 
@@ -70,7 +72,7 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
     fileUploadStore.map((item) => {
       arr.push(item.response.data);
     });
-    setFileUpload(arr);
+    // setFileUpload(arr)
     if (secectedArr) {
       setFileUpload([...arr, secectedArr]);
     }
@@ -79,6 +81,10 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
   };
 
   const handleSubmit = async (value: RequestSubmit) => {
+    if (!fileUpload.length) {
+      alertAdd(false, 'กรุณาอัพโหลดรูปภาพหลักฐาน', '');
+      return;
+    }
     await dispatch(kpiRequestAdd(value));
     alertAdd(true, 'ลงทะเบียนกิจกรรมสำเร็จ', '');
     await Timer(2000);
@@ -226,9 +232,10 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
         <h3 className="mb-5 text-lg font-medium text-[#00567e]">
           ส่วนที่ 3: อัพโหลดหลักฐานการเข้าร่วมกิจกรรม
         </h3>
+
         <button
           type="button"
-          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded inline-flex items-center"
           onClick={() => {
             setOpen(true);
           }}
@@ -242,6 +249,28 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
           </svg>
           <span>คลิกเพื่ออัพโหลดรูปภาพ</span>
         </button>
+
+        {fileUpload?.length ? (
+          <button
+            type="button"
+            className="bg-red-400 hover:bg-red-500 ml-2 text-white font-semibold py-2 px-4 rounded inline-flex items-center"
+            onClick={() => {
+              setFileUpload([]);
+            }}
+          >
+            <svg
+              className="w-4 h-4 mr-2 fill-white"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <path d="M 10 2 L 9 3 L 3 3 L 3 5 L 21 5 L 21 3 L 15 3 L 14 2 L 10 2 z M 4.3652344 7 L 5.8925781 20.263672 C 6.0245781 21.253672 6.877 22 7.875 22 L 16.123047 22 C 17.121047 22 17.974422 21.254859 18.107422 20.255859 L 19.634766 7 L 4.3652344 7 z"></path>
+            </svg>
+            <span>ลบรูปภาพ</span>
+          </button>
+        ) : (
+          <></>
+        )}
+
         <>
           <Modal
             open={open}

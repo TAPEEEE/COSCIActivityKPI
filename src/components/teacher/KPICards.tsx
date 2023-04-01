@@ -55,8 +55,8 @@ const KPICards: FC<CardProps> = (props) => {
         <h3 className="text-gray-800 text-xl font-semibold mb-3 line-clamp-2">
           {name_event}
         </h3>
-
-        <div className="flex flex-col justify-between">
+        <div className="flex justify-between"></div>
+        <div className="flex flex-col justify-end">
           <p className=" text-gray-500 text-sm mb-12 line-clamp-2">
             {detail_event}
           </p>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -42,35 +42,17 @@ export default function CustomizedTables() {
   const authReducer = useSelector(authSelector);
   const dispatch = useAppDispatch();
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(kpiHistoryGet({ user_id: authReducer.loginResult?.data.user_id }));
+
     console.log(kpiHistoryReducer.requestData);
   }, [dispatch]);
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {kpiHistoryReducer.requestData.map((row: KpiRequestForHistory) => (
-            <StyledTableRow key={row.requestData.end_date}>
-              <StyledTableCell component="th" scope="row">
-                {row.requestData.start_date}
-              </StyledTableCell>
-              <StyledTableCell align="right">
-                {row.requestData.start_date}
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>{' '}
-        */
-      </Table>
-    </TableContainer>
+    <>
+      {/* {kpiHistoryReducer.requestData.date_request.map((item) => {
+        <h1>{item}</h1>;
+      })} */}
+    </>
   );
 }
