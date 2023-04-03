@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Footer from '../../components/Footer';
 import TeacherNavbar from '../../components/teacher/TeacherNavbar';
 import KPICards from '../../components/teacher/KPICards';
-import './TeacherHistory.css';
+import './TeacherCheckHistory.css';
 import '../../scss/KPIHome.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store/store';
@@ -12,8 +12,9 @@ import {
   kpiHistoryGet,
   kpiHistorySelector,
 } from '../../store/slices/kpiHistorySlice';
+import KPIStatCard from '../../components/teacher/KPIStatCard';
 
-const TeacherHistory: React.FC<any> = () => {
+const TeacherCheckHistory: React.FC<any> = () => {
   const kpiReducer = useSelector(kpiHistorySelector);
   const dispatch = useAppDispatch();
 
@@ -25,9 +26,10 @@ const TeacherHistory: React.FC<any> = () => {
     <>
       <div className="w-screen h-screen bgimg overflow-auto">
         <TeacherNavbar />
+
         <div className="my-auto mt-4">
           <div className="flex justify-center">
-            <div className="mx-4 cardHome bg-gray-100 my-8 shadow-md rounded-lg">
+            <div className="mx-4 bg-gray-100 my-8 shadow-md rounded-lg">
               <div className="bg-[#1f2937] rounded-t-lg">
                 <div className="flex justify-start">
                   <button
@@ -55,6 +57,8 @@ const TeacherHistory: React.FC<any> = () => {
                 </div>
               </div>
 
+              <KPIStatCard />
+
               <div className="mx-5 my-5">
                 <div className="flex flex-col">
                   <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -78,4 +82,4 @@ const TeacherHistory: React.FC<any> = () => {
   );
 };
 
-export default TeacherHistory;
+export default TeacherCheckHistory;

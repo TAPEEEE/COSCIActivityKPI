@@ -14,6 +14,7 @@ const TeacherHome: React.FC<any> = () => {
 
   useEffect(() => {
     dispatch(getKpi());
+    console.log(kpiReducer.kpiAllResult);
   }, [dispatch]);
 
   return (

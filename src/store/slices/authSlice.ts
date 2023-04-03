@@ -21,6 +21,7 @@ export interface AuthState {
   isAdmin: boolean;
   isTeacher: boolean;
   isNotVetify: boolean;
+  isSessionExp: boolean;
 }
 
 export interface UserCurrent {
@@ -40,6 +41,7 @@ const initial: AuthState = {
   isAdmin: false,
   isTeacher: false,
   isNotVetify: false,
+  isSessionExp: false,
 };
 
 const initialUser: UserCurrent = {
@@ -108,6 +110,17 @@ const authSlice = createSlice({
       localStorage.removeItem('user');
       history.push('/login');
     },
+    sessionExp: (state, action: PayloadAction<void>) => {
+      state.isAuthented = false;
+      state.isError = false;
+      state.isAdmin = false;
+      state.isTeacher = false;
+      state.isNotVetify = false;
+      state.isSessionExp = true;
+      localStorage.removeItem(server.TOKEN_KEY);
+      localStorage.removeItem('user');
+      history.push('/login');
+    },
     relogin: (state: AuthState, action: PayloadAction<void>) => {
       const _token = localStorage.getItem(server.TOKEN_KEY);
       const user = JSON.parse(localStorage.getItem('user')!);
@@ -131,6 +144,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     //login
     builder.addCase(login.fulfilled, (state, action) => {
+      state.isSessionExp = false;
       const user = JSON.parse(localStorage.getItem('user')!);
       if (action.payload.result === 'OK') {
         state.isAuthented = true;
@@ -158,6 +172,7 @@ const authSlice = createSlice({
     });
 
     builder.addCase(otpVerify.fulfilled, (state, action) => {
+      state.isSessionExp = false;
       if (action.payload.result === 'OK') {
         state.isAuthented = true;
         state.isError = false;
@@ -176,11 +191,12 @@ const authSlice = createSlice({
 
     //register
     builder.addCase(register.fulfilled, (state, action) => {
+      state.isSessionExp = false;
       state.isError = action.payload.result !== 'OK';
     });
   },
 });
 
-export const { logout, relogin } = authSlice.actions;
+export const { logout, relogin, sessionExp } = authSlice.actions;
 export const authSelector = (store: RootState) => store.authReducer;
 export default authSlice.reducer;

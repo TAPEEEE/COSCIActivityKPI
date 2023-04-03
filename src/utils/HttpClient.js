@@ -7,7 +7,7 @@ import {
   NETWORK_CONNECTION_MESSAGE,
 } from '../constants';
 import { store } from '../store/store';
-import { logout, relogin, getTeacher } from '../store/slices/authSlice';
+import { sessionExp } from '../store/slices/authSlice';
 
 const isAbsoluteURLRegex = /^(?:\w+:)\/\//;
 
@@ -39,8 +39,7 @@ axios.interceptors.response.use(
 
       // const token = result.data.jwt;
       // localStorage.setItem(server.TOKEN_KEY, token);
-
-      dispatch(logout());
+      dispatch(sessionExp());
 
       // return axios.request(error.config);
     } else if (error.response.status === 403) {

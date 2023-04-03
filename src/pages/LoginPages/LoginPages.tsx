@@ -9,6 +9,7 @@ import { Button, Modal, Space } from 'antd';
 import { authSelector } from '../../store/slices/authSlice';
 import { useSelector } from 'react-redux';
 import OtpInterface from '../../components/auth/OtpInterface';
+import alertAdd from '../../utils/alertAdd';
 
 const onChange = (key: string) => {
   console.log(key);
@@ -18,6 +19,16 @@ const role = ['นิสิต', 'อาจารย์และบุคลา�
 
 const LoginPages: React.FC<any> = () => {
   const authReducer = useSelector(authSelector);
+
+  useEffect(() => {
+    if (authReducer.isSessionExp) {
+      alertAdd(
+        false,
+        'กรุณาเข้าสู่ระบบใหม่',
+        'Session หมดอายุเนื่องจากไม่ได้ใช้งานเกินเวลาที่กำหนด',
+      );
+    }
+  });
 
   return (
     <>

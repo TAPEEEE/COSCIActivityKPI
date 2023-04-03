@@ -13,52 +13,32 @@ import {
 } from '../../types/kpi-request';
 import {
   KpiHistoryResult,
-  KpiRequestForHistory,
-  userGet,
+  KpiHistorytData,
+  KpiRequestForHistoryData,
 } from '../../types/kpi-history';
 
-export interface kpiRequestState {
-  KpiHistoryResult?: KpiHistoryResult;
+export interface kpiRequestHistoryState {
+  kpiHistoryAll?: KpiHistorytData[];
 }
 
-const initialState: KpiRequestForHistory = {
-  requestData: {
-    _id: '',
-    user: {
-      id_user: '',
-      user_id: '',
-      name: '',
-    },
-    event: {
-      id_event: '',
-      name_event: '',
-      detail_event: '',
-      start_date: '',
-      end_date: '',
-      posted_timestamp: '',
-      event_type: '',
-      event_img: '',
-      activity_hour: 1,
-      event_status: true,
-      event_img_list: [],
-    },
-    start_date: '',
-    end_date: '',
-    uploaded_img: [],
-    uploaded_pdf: '',
-    date_request: '',
-    status_request: '',
-    type_request: '',
-    permissions_request: '',
-  },
+const initialState: kpiRequestHistoryState = {
+  kpiHistoryAll: [],
 };
 
-// Add
 export const kpiHistoryGet = createAsyncThunk(
-  'history/get',
-  async (formData: userGet) => {
-    const result = await httpClient.post(server.TEACHER_HISTORY, formData);
-    return result.data.data;
+  'kpi/getAll',
+  async (keyword?: string): Promise<KpiHistorytData[]> => {
+    if (keyword) {
+      const result = await httpClient.get<KpiHistoryResult>(
+        `${server.TEACHER_HISTORY}/name/${keyword}`,
+      );
+      return result.data.data.data;
+    } else {
+      const result = await httpClient.get<KpiHistoryResult>(
+        server.TEACHER_HISTORY,
+      );
+      return result.data.data.data;
+    }
   },
 );
 
@@ -68,11 +48,11 @@ const kpiHistorySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(kpiHistoryGet.fulfilled, (state, action) => {
-      state.requestData = action.payload.data;
+      state.kpiHistoryAll = action.payload;
     });
   },
 });
 
-export const kpiHistorySelector = (store: RootState): KpiRequestForHistory =>
+export const kpiHistorySelector = (store: RootState): kpiRequestHistoryState =>
   store.kpiHistoryReducer;
 export default kpiHistorySlice.reducer;

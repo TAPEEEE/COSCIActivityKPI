@@ -4,10 +4,10 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useAppDispatch } from '../../store/store';
 import { logout } from '../../store/slices/authSlice';
+import { imageUrl } from '../../constants';
 
 const navigation = [
   { name: 'หน้าแรก', href: '/teacherhome' },
-  { name: 'ตรวจสอบกิจกรรม', href: '/admin-activity-dashboard' },
   { name: 'ประวัติคำร้อง', href: '/teacherhistory' },
 ];
 
@@ -77,7 +77,7 @@ const TeacherNavbar: FC = () => {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full bg-white"
-                        src="http://cosci.swu.ac.th/storage/faculties-and-staffs/dVDkGC2vraoYate5KgGG59Wr0kM3Zi8Da53Kg5JE.png"
+                        src={`${imageUrl}${'public/img/userimgdefault.png'}`}
                         alt=""
                       />
                     </Menu.Button>

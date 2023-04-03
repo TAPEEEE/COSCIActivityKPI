@@ -88,7 +88,7 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
     await dispatch(kpiRequestAdd(value));
     alertAdd(true, 'ลงทะเบียนกิจกรรมสำเร็จ', '');
     await Timer(2000);
-    navigate('/teacherhome');
+    navigate('/teacherhistory');
   };
 
   const propsUpload: UploadProps = {

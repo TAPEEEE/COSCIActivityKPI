@@ -1,13 +1,20 @@
 export interface KpiHistoryResult {
   result: string;
   message: string;
-  data: KpiHistorytData;
+  data: KpiRequestForHistoryData;
 }
 
 export interface KpiHistorytData {
   _id: string;
-  user: userData;
-  event: eventData;
+  id_user: string;
+  user_id: string;
+  name: string;
+  student_id: string;
+  id_event: string;
+  name_event: string;
+  event_img: string;
+  event_type: string;
+  activity_hour: string;
   start_date: string;
   end_date: string;
   uploaded_img: string[];
@@ -18,24 +25,8 @@ export interface KpiHistorytData {
   permissions_request: string;
 }
 
-export interface userGet {
-  user_id?: string;
-}
-
-export interface KpiRequestForHistory {
-  requestData: {
-    _id: string;
-    user: userData;
-    event: eventData;
-    start_date: string;
-    end_date: string;
-    uploaded_img: string[];
-    uploaded_pdf: string;
-    date_request: string;
-    status_request: string;
-    type_request: string;
-    permissions_request: string;
-  };
+export interface KpiRequestForHistoryData {
+  data: KpiHistorytData[];
 }
 
 export interface userData {
