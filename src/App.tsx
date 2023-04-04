@@ -19,6 +19,7 @@ import TeacherKPIDetail from './pages/TeacherKPIDetail';
 import TeacherAddRequest from './pages/TeacherAddRequest';
 import TeacherHistory from './pages/TeacherHistory';
 import TeacherCheckHistory from './pages/TeacherCheckHistory';
+import Profile from './pages/Profile';
 
 export default function App() {
   const authReducer = useSelector(authSelector);
@@ -66,6 +67,7 @@ export default function App() {
               path="/teachercheckhistory"
               element={<TeacherCheckHistory />}
             />
+            <Route path="/profile" element={<Profile />} />
             <Route
               path="/teacher/add-request/:id"
               element={<TeacherAddRequest />}

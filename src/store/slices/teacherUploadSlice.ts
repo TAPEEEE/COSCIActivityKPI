@@ -20,15 +20,19 @@ const initial: TeacherUploadState = {
 export const teacherupload = createAsyncThunk(
   'auth/teacherUploaded',
   async (values: TeacherUpload) => {
-    const result = await httpClient.post<TeacherUploadResult>(
-      server.GET_TEAHER_INFOMATION,
-      values,
-    );
-    const data = result.data.data;
-    if (data) {
-      localStorage.setItem('user', JSON.stringify(result.data.data));
+    try {
+      const result = await httpClient.post<TeacherUploadResult>(
+        server.GET_TEAHER_INFOMATION,
+        values,
+      );
+      const data = result.data.data;
+      if (data) {
+        localStorage.setItem('user', JSON.stringify(result.data.data));
+      }
+      return result.data;
+    } catch (error) {
+      alert(JSON.stringify(error));
     }
-    return result.data;
   },
 );
 
@@ -38,12 +42,12 @@ const TeacherUploadSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(teacherupload.fulfilled, (state, action) => {
-      if (action.payload.result === 'OK') {
+      if (action.payload?.result === 'OK') {
         state.isFind = true;
         state.isError = false;
         state.isSuccess = false;
         state.teacherUploadResult = action.payload;
-      } else if (action.payload.result === 'nOK') {
+      } else if (action.payload?.result === 'nOK') {
         state.isFind = false;
         state.isError = false;
         state.isSuccess = true;

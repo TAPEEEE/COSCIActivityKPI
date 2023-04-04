@@ -1,5 +1,5 @@
 import React, { FC, memo, Fragment } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useAppDispatch } from '../../store/store';
@@ -16,6 +16,7 @@ function classNames(...classes: string[]) {
 }
 
 const TeacherNavbar: FC = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   return (
     <Disclosure as="nav" className="bg-[#000] font-Kanit sticky top-0 z-10">
@@ -95,7 +96,7 @@ const TeacherNavbar: FC = () => {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            onClick={() => navigate('/profile')}
                             className={classNames(
                               active ? 'bg-gray-100' : '',
                               'block px-4 py-2 text-sm text-0',
@@ -108,7 +109,7 @@ const TeacherNavbar: FC = () => {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            onClick={() => navigate('/profile')}
                             className={classNames(
                               active ? 'bg-gray-100' : '',
                               'block px-4 py-2 text-sm text-gray-700',

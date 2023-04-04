@@ -56,11 +56,15 @@ const initialState: KpiRequestForUsed = {
 export const kpiRequestAdd = createAsyncThunk(
   'request/add',
   async (formData: kpiRequestType) => {
-    const result = await httpClient.post<KpiRequestResult>(
-      server.TEACHER_ADD_REQUEST,
-      formData,
-    );
-    return result.data;
+    try {
+      const result = await httpClient.post<KpiRequestResult>(
+        server.TEACHER_ADD_REQUEST,
+        formData,
+      );
+      return result.data;
+    } catch (error) {
+      alert(JSON.stringify(error));
+    }
   },
 );
 
@@ -70,7 +74,7 @@ const kpiRequestSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(kpiRequestAdd.fulfilled, (state, action) => {
-      if (action.payload.result === 'OK') {
+      if (action.payload?.result === 'OK') {
         state.requestData = action.payload.data;
       }
     });

@@ -20,9 +20,13 @@ const initialState: KpiState = {
 export const addKpi = createAsyncThunk(
   'kpi/add',
   async (formData: FormData) => {
-    await httpClient.post(server.ADD_KPI, formData);
-    history.back();
-    store.dispatch(getKpi());
+    try {
+      await httpClient.post(server.ADD_KPI, formData);
+      history.back();
+      store.dispatch(getKpi());
+    } catch (error) {
+      alert(JSON.stringify(error));
+    }
   },
 );
 

@@ -19,6 +19,7 @@ const TeacherKPIDetailRequest: FC = () => {
   const dispatch = useAppDispatch();
   const kpiReducer = useSelector(kpiSelector);
   const navigate = useNavigate();
+  const momentth = moment().locale('th');
   useEffect(() => {
     if (match?.params.id) {
       dispatch(getKPIById(match?.params.id));
@@ -108,7 +109,7 @@ const TeacherKPIDetailRequest: FC = () => {
                         <h1 className="font-Kanit text-[#282e38] font-regular text-lg sm:text-md mb-2">
                           วันเริ่มต้นกิจกรรม :
                           <span className="text-md text-gray-500 mt-1 ml-2">
-                            {`${moment(kpiReducer.kpiOneResult?.start_date)
+                            {` ${moment(kpiReducer.kpiOneResult?.start_date)
                               .add(543, 'year')
                               .format('DD MMMM YYYY เวลา hh:mm')}`}
                           </span>

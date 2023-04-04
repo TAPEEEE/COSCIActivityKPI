@@ -1,5 +1,12 @@
 import React, { FC, useRef, useState } from 'react';
-import { Empty, Input, InputRef, Modal, TableProps } from 'antd';
+import {
+  ConfigProvider,
+  Empty,
+  Input,
+  InputRef,
+  Modal,
+  TableProps,
+} from 'antd';
 import { Button, Space, Table, Image } from 'antd';
 import { SearchOutlined, CheckCircleFilled } from '@ant-design/icons';
 import filtersActivityList from '../../utils/filtersActivityList';
@@ -159,7 +166,7 @@ const KPIHistory: FC<Data> = (props) => {
       sorter: (a, b) =>
         moment(a.date_request).unix() - moment(b.date_request).unix(),
       render: (_, record) => (
-        <div className="">{moment(record.date_request).format('l')}</div>
+        <div className="">{moment(record.date_request).format('L')}</div>
       ),
     },
     {
@@ -300,12 +307,18 @@ const KPIHistory: FC<Data> = (props) => {
 
   return (
     <>
-      <Table
-        pagination={{ pageSize: 6 }}
-        columns={columns}
-        dataSource={KpiHistorytData}
-        // onChange={handleChange}
-      />
+      <ConfigProvider
+        renderEmpty={() => (
+          <Empty description="ไม่มีประวัติคำร้อง" className="my-52" />
+        )}
+      >
+        <Table
+          pagination={{ pageSize: 6 }}
+          columns={columns}
+          dataSource={KpiHistorytData}
+          // onChange={handleChange}
+        />
+      </ConfigProvider>
     </>
   );
 };
