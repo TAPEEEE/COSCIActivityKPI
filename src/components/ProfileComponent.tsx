@@ -46,7 +46,7 @@ const ProfileComponent: FC<Profile> = (props) => {
         <h3 className="mb-5 text-lg font-medium text-[#00567e]">
           ส่วนที่ 1: ข้อมูลส่วนตัว
         </h3>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2">
           <div className="form-group mb-4">
             <h3 className="mb-1 text-md">ชื่อ-สกุล</h3>
             <input
@@ -147,7 +147,7 @@ const ProfileComponent: FC<Profile> = (props) => {
             // }
             className="w-full md:w-60 text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4 font-medium rounded-xl text-base px-5 py-2.5 text-center"
           >
-            ส่งคำร้องลงบันทึกกิจกรรม
+            เปลี่ยนรหัสผ่าน
           </button>
         </div>
       </div>

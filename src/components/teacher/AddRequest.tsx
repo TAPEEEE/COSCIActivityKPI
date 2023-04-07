@@ -194,7 +194,7 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
         <h3 className="mb-5 text-lg font-medium text-[#00567e]">
           ส่วนที่ 2: ข้อมูลผู้ยื่นคำร้อง
         </h3>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2">
           <div className="form-group mb-4">
             <h3 className="mb-1 text-md">ชื่อ-สกุล</h3>
             <input
