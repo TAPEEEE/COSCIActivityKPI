@@ -34,7 +34,7 @@ const TeacherHome: React.FC<any> = () => {
                 </div>
               </div>
 
-              {kpiReducer.kpiAllResult ? (
+              {kpiReducer.kpiAllResult.length ? (
                 <div className="mx-5 py-5 sm:px-6 lg:px-8 mt-8">
                   <Spin
                     spinning={kpiReducer.isLoading}
@@ -59,10 +59,10 @@ const TeacherHome: React.FC<any> = () => {
                 <Spin
                   spinning={kpiReducer.isLoading}
                   size="large"
-                  className="my-24"
+                  className="my-24 bg-white"
                 >
                   <Empty
-                    className="my-54 mx-max"
+                    className="my-56"
                     description={'ยังไม่มีกิจกรรมที่สามารถเข้าร่วมได้'}
                   />
                 </Spin>

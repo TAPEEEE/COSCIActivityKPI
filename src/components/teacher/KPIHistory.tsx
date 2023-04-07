@@ -194,7 +194,7 @@ const KPIHistory: FC<Data> = (props) => {
       title: 'สถานะ',
       dataIndex: 'status_request',
       key: 'status_request',
-      width: '15%',
+      width: '10%',
       render: (_, record) => (
         <div className="ml-4 text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-green-200 text-green-700 rounded-full">
           {record.status_request}
