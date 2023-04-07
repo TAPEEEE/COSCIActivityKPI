@@ -3,13 +3,14 @@ import './LoginPages.scss';
 import logo from '../../assets/COSCI_logo.png';
 import { StudentLoginInterface } from '../../components/auth/StudentLoginInterface';
 import TeacherLoginInterface from '../../components/auth/TeacherLoginInterface';
-import { Tabs } from 'antd';
+import { Spin, Tabs } from 'antd';
 import '../../scss/AntTabList.scss';
 import { Button, Modal, Space } from 'antd';
 import { authSelector } from '../../store/slices/authSlice';
 import { useSelector } from 'react-redux';
 import OtpInterface from '../../components/auth/OtpInterface';
 import alertAdd from '../../utils/alertAdd';
+import alertSession from '../../utils/alertSession';
 
 const onChange = (key: string) => {
   console.log(key);
@@ -19,13 +20,11 @@ const role = ['นิสิต', 'อาจารย์และบุคลา�
 
 const LoginPages: React.FC<any> = () => {
   const authReducer = useSelector(authSelector);
-
   useEffect(() => {
     if (authReducer.isSessionExp) {
-      alertAdd(
-        false,
-        'กรุณาเข้าสู่ระบบใหม่',
-        'Session หมดอายุเนื่องจากไม่ได้ใช้งานเกินเวลาที่กำหนด',
+      alertSession(
+        'Session หมดอายุเนื่องจากไม่ได้ใช้งานเว็บไซต์เป็นเวลานาน',
+        '',
       );
     }
   });

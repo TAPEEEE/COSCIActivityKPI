@@ -9,11 +9,15 @@ import { KpiList, KpiResult } from '../../types/teacherKpiType';
 export interface KpiState {
   kpiAllResult: KpiList[];
   kpiOneResult: KpiList | null;
+  isLoading: boolean;
+  isError: boolean;
 }
 
 const initialState: KpiState = {
   kpiAllResult: [],
   kpiOneResult: null,
+  isLoading: false,
+  isError: false,
 };
 
 // Add
@@ -79,11 +83,27 @@ const kpiSlice = createSlice({
   extraReducers: (builder) => {
     // getKpi
     builder.addCase(getKpi.fulfilled, (state, action) => {
+      state.isLoading = false;
       state.kpiAllResult = action.payload;
       state.kpiOneResult = initialState.kpiOneResult;
     });
     builder.addCase(getKPIById.fulfilled, (state, action) => {
+      state.isLoading = false;
       state.kpiOneResult = action.payload;
+    });
+    builder.addCase(getKpi.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getKPIById.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getKpi.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+    });
+    builder.addCase(getKPIById.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
     });
   },
 });

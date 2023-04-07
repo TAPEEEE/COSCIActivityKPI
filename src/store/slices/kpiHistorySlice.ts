@@ -19,10 +19,12 @@ import {
 
 export interface kpiRequestHistoryState {
   kpiHistoryAll?: KpiHistorytData[];
+  isLoading: boolean;
 }
 
 const initialState: kpiRequestHistoryState = {
   kpiHistoryAll: [],
+  isLoading: false,
 };
 
 export const kpiHistoryGet = createAsyncThunk(
@@ -48,7 +50,11 @@ const kpiHistorySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(kpiHistoryGet.fulfilled, (state, action) => {
+      state.isLoading = false;
       state.kpiHistoryAll = action.payload;
+    });
+    builder.addCase(kpiHistoryGet.pending, (state, action) => {
+      state.isLoading = true;
     });
   },
 });

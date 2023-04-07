@@ -31,6 +31,9 @@ import Highlighter from 'react-highlight-words';
 import { AudioOutlined } from '@ant-design/icons';
 import { imageUrl } from '../../constants';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { kpiHistorySelector } from '../../store/slices/kpiHistorySlice';
+import 'moment/locale/th';
 
 interface Data {
   KpiHistorytData?: KpiHistorytData[];
@@ -56,21 +59,8 @@ const KPIHistory: FC<Data> = (props) => {
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
   const [open, setOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const kpiReducer = useSelector(kpiHistorySelector);
   const { confirm } = Modal;
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
 
   const handleSearch = (
     selectedKeys: string[],
@@ -166,7 +156,9 @@ const KPIHistory: FC<Data> = (props) => {
       sorter: (a, b) =>
         moment(a.date_request).unix() - moment(b.date_request).unix(),
       render: (_, record) => (
-        <div className="">{moment(record.date_request).format('L')}</div>
+        <div className="">
+          {moment(record.date_request).format('DD MMMM YYYY')}
+        </div>
       ),
     },
     {
@@ -240,7 +232,7 @@ const KPIHistory: FC<Data> = (props) => {
                         </span>
                       </p>
                       <p className="font-semibold mt-2 text-lg">
-                        {`ผู้ยื่นคำร้อง : `}
+                        {`ผู้เข้าร่วมกิจกรรม : `}
                         <span className="font-normal ml-2">{record.name}</span>
                       </p>
 
@@ -257,7 +249,15 @@ const KPIHistory: FC<Data> = (props) => {
                         </span>
                       </p>
                       <p className="font-semibold mt-2 text-lg">
-                        {`วันที่เข้าร่วม : `}
+                        {`เวลาเริ่มกิจกรรม : `}
+                        <span className="font-normal ml-2">
+                          {moment(record.start_date)
+                            .add(543, 'year')
+                            .format('DD MMMM YYYY เวลา hh:mm')}
+                        </span>
+                      </p>
+                      <p className="font-semibold mt-2 text-lg">
+                        {`ลงทะเบียนเข้าร่วมเมื่อ : `}
                         <span className="font-normal ml-2">
                           {moment(record.date_request)
                             .add(543, 'year')
@@ -316,6 +316,7 @@ const KPIHistory: FC<Data> = (props) => {
           pagination={{ pageSize: 6 }}
           columns={columns}
           dataSource={KpiHistorytData}
+          loading={kpiReducer.isLoading}
           // onChange={handleChange}
         />
       </ConfigProvider>

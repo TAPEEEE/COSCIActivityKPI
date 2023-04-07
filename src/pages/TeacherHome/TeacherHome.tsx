@@ -7,6 +7,7 @@ import '../../scss/KPIHome.scss';
 import { getKpi, kpiSelector } from '../../store/slices/kpiSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store/store';
+import { Empty, Spin } from 'antd';
 
 const TeacherHome: React.FC<any> = () => {
   const kpiReducer = useSelector(kpiSelector);
@@ -21,6 +22,7 @@ const TeacherHome: React.FC<any> = () => {
     <>
       <div className="w-screen h-screen bgimg overflow-auto">
         <TeacherNavbar />
+
         <div className="my-auto mt-4">
           <div className="flex justify-center">
             <div className="mx-4 cardHome bg-gray-100 my-8 shadow-md rounded-lg">
@@ -32,23 +34,43 @@ const TeacherHome: React.FC<any> = () => {
                 </div>
               </div>
 
-              <div className="mx-5 py-5 sm:px-6 lg:px-8 mt-8">
-                {kpiReducer.kpiAllResult.map((item) => (
-                  <KPICards
-                    key={item._id}
-                    id={item._id}
-                    name_event={item.name_event}
-                    event_type={item.event_type}
-                    detail_event={item.detail_event}
-                    start_date={item.start_date}
-                    end_date={item.end_date}
-                    event_img={item.event_img}
+              {kpiReducer.kpiAllResult ? (
+                <div className="mx-5 py-5 sm:px-6 lg:px-8 mt-8">
+                  <Spin
+                    spinning={kpiReducer.isLoading}
+                    size="large"
+                    className="mt-24"
+                  >
+                    {kpiReducer.kpiAllResult.map((item) => (
+                      <KPICards
+                        key={item._id}
+                        id={item._id}
+                        name_event={item.name_event}
+                        event_type={item.event_type}
+                        detail_event={item.detail_event}
+                        start_date={item.start_date}
+                        end_date={item.end_date}
+                        event_img={item.event_img}
+                      />
+                    ))}
+                  </Spin>
+                </div>
+              ) : (
+                <Spin
+                  spinning={kpiReducer.isLoading}
+                  size="large"
+                  className="my-24"
+                >
+                  <Empty
+                    className="my-54 mx-max"
+                    description={'ยังไม่มีกิจกรรมที่สามารถเข้าร่วมได้'}
                   />
-                ))}
-              </div>
+                </Spin>
+              )}
             </div>
           </div>
         </div>
+
         <Footer />
       </div>
     </>

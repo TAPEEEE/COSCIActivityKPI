@@ -9,12 +9,14 @@ export interface TeacherUploadState {
   isFind: boolean;
   isError: boolean;
   isSuccess: boolean;
+  isLoading: boolean;
 }
 
 const initial: TeacherUploadState = {
   isSuccess: false,
   isFind: false,
   isError: false,
+  isLoading: false,
 };
 
 export const teacherupload = createAsyncThunk(
@@ -42,6 +44,7 @@ const TeacherUploadSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(teacherupload.fulfilled, (state, action) => {
+      state.isLoading = false;
       if (action.payload?.result === 'OK') {
         state.isFind = true;
         state.isError = false;
@@ -57,6 +60,10 @@ const TeacherUploadSlice = createSlice({
         state.isFind = false;
         state.isSuccess = false;
       }
+    });
+
+    builder.addCase(teacherupload.pending, (state, action) => {
+      state.isLoading = true;
     });
   },
 });

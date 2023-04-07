@@ -11,11 +11,13 @@ import {
   teacherupload,
   teacherUploadSelector,
 } from '../../store/slices/teacherUploadSlice';
-import alertRegister from '../../utils/alertAdd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 
 const RegisterPages: React.FC<any> = () => {
   const dispatch = useAppDispatch();
   const teacherUploadReducer = useSelector(teacherUploadSelector);
+  const loadingIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 
   const Timer = (ms: number | undefined) =>
     new Promise((r) => setTimeout(r, ms));
@@ -97,12 +99,17 @@ const RegisterPages: React.FC<any> = () => {
 
                   {!teacherUploadReducer.isFind && (
                     <>
-                      <button
-                        type="submit"
-                        className=" mt-5 w-full text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                      <Spin
+                        indicator={loadingIcon}
+                        spinning={teacherUploadReducer.isLoading}
                       >
-                        ค้นหาชื่อผู้ใช้
-                      </button>
+                        <button
+                          type="submit"
+                          className="font-Kanit mt-5 w-full text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                        >
+                          ค้นหาชื่อผู้ใช้
+                        </button>
+                      </Spin>
                     </>
                   )}
                 </form>

@@ -8,7 +8,8 @@ import { useSelector } from 'react-redux';
 import { store, useAppDispatch } from '../../store/store';
 import { authSelector, login } from '../../store/slices/authSlice';
 import { Alert } from '@mui/material';
-
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 // const dispatch = useAppDispatch();
 // const authReducer = useSelector(authSelector);
 
@@ -20,6 +21,7 @@ const UserLoginSchema = Yup.object().shape({
 const TeacherLoginInterface: FC = () => {
   const dispatch = useAppDispatch();
   const authReducer = useSelector(authSelector);
+  const loadingIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 
   return (
     <div>
@@ -83,7 +85,12 @@ const TeacherLoginInterface: FC = () => {
                   </div>
                 )}
                 {authReducer.isAuthented && (
-                  <Alert severity="success">เข้าสู่ระบบสำเร็จ</Alert>
+                  <div
+                    className="bg-green-100 text-green-700 px-4 py-3 rounded relative"
+                    role="alert"
+                  >
+                    <span className="block sm:inline">เข้าสู่ระบบสำเร็จ</span>
+                  </div>
                 )}
 
                 <div className="flex items-start">
@@ -94,21 +101,22 @@ const TeacherLoginInterface: FC = () => {
                     ลืมรหัสผ่าน?
                   </a>
                 </div>
+                <Spin spinning={authReducer.isLoading} indicator={loadingIcon}>
+                  <button
+                    type="submit"
+                    className="font-Kanit w-full text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4 font-medium rounded-lg text-base px-5 py-2.5 text-center"
+                  >
+                    เข้าสู่ระบบ
+                  </button>
 
-                <button
-                  type="submit"
-                  className="w-full text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4 font-medium rounded-lg text-base px-5 py-2.5 text-center"
-                >
-                  เข้าสู่ระบบ
-                </button>
-
-                <button
-                  onClick={alertTermAndConditions}
-                  type="button"
-                  className="mt-2 w-full text-gray-800 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center"
-                >
-                  สมัครสมาชิก
-                </button>
+                  <button
+                    onClick={alertTermAndConditions}
+                    type="button"
+                    className="font-Kanit mt-2 w-full text-gray-800 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center"
+                  >
+                    สมัครสมาชิก
+                  </button>
+                </Spin>
               </Form>
             </div>
           </div>

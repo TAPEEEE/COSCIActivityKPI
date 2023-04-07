@@ -10,7 +10,7 @@
 
 @media screen and (max-width: 600px) {
   .cardHome {
-    width: fit-content !important;
+    width: 500px !important;
   }
 }
 
@@ -20,8 +20,26 @@
   }
 }
 
-@media screen and (max-width: 280px) {
+@media screen and (max-width: 450px) {
   .cardHome {
-    width: 250px !important;
+    width: 370px !important;
   }
 }
+
+@media screen and (max-width: 320px) {
+  .cardHome {
+    width: 300px !important;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .cardHome {
+    width: 260px !important;
+  }
+}
+
+// @media screen and (max-width: 380px) {
+//   .cardHome {
+//     width: 360px !important;
+//   }
+// }

@@ -8,6 +8,7 @@ export interface LoginResult {
 
 export interface RegisterResult {
   result: string;
+  message: string;
   error?: string;
 }
 

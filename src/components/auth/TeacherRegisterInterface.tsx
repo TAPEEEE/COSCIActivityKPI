@@ -9,6 +9,8 @@ import { teacherUploadSelector } from '../../store/slices/teacherUploadSlice';
 import { useAppDispatch } from '../../store/store';
 import { authSelector, logout, register } from '../../store/slices/authSlice';
 import alertAdd from '../../utils/alertAdd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 
 interface PreFilledProps {
   object: {
@@ -31,6 +33,7 @@ const TeacherRegisterInterface: FC<PreFilledProps> = (props) => {
   const teacherUploadReducer = useSelector(teacherUploadSelector);
   const dispatch = useAppDispatch();
   const authReducer = useSelector(authSelector);
+  const loadingIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
   const back = async () => {
     await dispatch(logout());
     window.location.reload();
@@ -77,6 +80,7 @@ const TeacherRegisterInterface: FC<PreFilledProps> = (props) => {
       await dispatch(register(values));
       if (authReducer.registerResult?.error) {
         alertAdd(false, 'สมัครสมาชิกไม่สำเร็จ', '');
+        return;
       } else {
         alertAdd(true, 'สมัครสมาชิกสำเร็จ', '');
       }
@@ -203,13 +207,14 @@ const TeacherRegisterInterface: FC<PreFilledProps> = (props) => {
           </div>
         ) : null}
       </div>
-
-      <button
-        type="submit"
-        className="w-full mt-5 text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center"
-      >
-        สมัครสมาชิก
-      </button>
+      <Spin indicator={loadingIcon} spinning={authReducer.isLoading}>
+        <button
+          type="submit"
+          className="font-Kanit w-full mt-5 text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center"
+        >
+          สมัครสมาชิก
+        </button>
+      </Spin>
 
       <button
         onClick={back}

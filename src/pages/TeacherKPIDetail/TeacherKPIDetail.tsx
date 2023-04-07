@@ -9,6 +9,7 @@ import { useAppDispatch } from '../../store/store';
 import moment from 'moment';
 import { Empty, Image } from 'antd';
 import { imageUrl } from '../../constants';
+import 'moment/locale/th';
 
 type TeacherKPIDetailProps = {
   //

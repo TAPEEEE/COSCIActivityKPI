@@ -18,10 +18,12 @@ export interface AuthState {
   isAuthenticating: boolean;
   isAuthented: boolean;
   isError: boolean;
+  isLoading: boolean;
   isAdmin: boolean;
   isTeacher: boolean;
   isNotVetify: boolean;
   isSessionExp: boolean;
+  errorMessage: string;
 }
 
 export interface UserCurrent {
@@ -42,6 +44,8 @@ const initial: AuthState = {
   isTeacher: false,
   isNotVetify: false,
   isSessionExp: false,
+  isLoading: false,
+  errorMessage: '',
 };
 
 const initialUser: UserCurrent = {
@@ -97,9 +101,6 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: initial,
   reducers: {
-    getTeacher: (state, action: PayloadAction<void>) => {
-      state.isError = true;
-    },
     logout: (state, action: PayloadAction<void>) => {
       state.isAuthented = false;
       state.isError = false;
@@ -145,11 +146,12 @@ const authSlice = createSlice({
     //login
     builder.addCase(login.fulfilled, (state, action) => {
       state.isSessionExp = false;
+      state.isLoading = false;
       const user = JSON.parse(localStorage.getItem('user')!);
       if (action.payload.result === 'OK') {
-        state.isAuthented = true;
         state.isError = false;
         state.loginResult = action.payload;
+        state.isAuthented = true;
         if (action.payload.data.role === 'admin') {
           state.isAdmin = true;
         } else {
@@ -171,8 +173,20 @@ const authSlice = createSlice({
       state.isAuthenticating = false;
     });
 
+    builder.addCase(login.pending, (state, action) => {
+      state.isSessionExp = false;
+      state.isLoading = true;
+    });
+
+    builder.addCase(otpVerify.pending, (state, action) => {
+      state.isSessionExp = false;
+      state.isLoading = true;
+    });
+
     builder.addCase(otpVerify.fulfilled, (state, action) => {
       state.isSessionExp = false;
+      state.isLoading = false;
+
       if (action.payload.result === 'OK') {
         state.isAuthented = true;
         state.isError = false;
@@ -191,8 +205,13 @@ const authSlice = createSlice({
 
     //register
     builder.addCase(register.fulfilled, (state, action) => {
+      state.isLoading = false;
       state.isSessionExp = false;
       state.isError = action.payload.result !== 'OK';
+    });
+
+    builder.addCase(register.pending, (state, action) => {
+      state.isLoading = true;
     });
   },
 });

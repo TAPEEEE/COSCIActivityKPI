@@ -2,7 +2,7 @@ import React, { FC, memo } from 'react';
 import moment from 'moment';
 import Moment from 'react-moment';
 import { useNavigate } from 'react-router-dom';
-
+import 'moment/locale/th';
 interface CardProps {
   id?: string;
   name_event?: string;

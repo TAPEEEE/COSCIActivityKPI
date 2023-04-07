@@ -22,3 +22,7 @@ export interface KpiList {
   event_status?: boolean;
   permissions_type?: string;
 }
+
+export interface ErrorMessage {
+  message?: string;
+}
