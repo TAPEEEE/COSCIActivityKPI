@@ -14,42 +14,17 @@ import {
 
 export interface kpiRequestState {
   KpiRequestResult?: KpiRequestResult;
+  isLoading: boolean;
+  isError: boolean;
+  isSuccess: boolean;
+  errorMessage: object;
 }
 
-const initialState: KpiRequestForUsed = {
-  requestData: {
-    user: {
-      user: {
-        id_user: '',
-        user_id: '',
-        name: '',
-      },
-    },
-    event: {
-      event: {
-        id_event: '',
-        name_event: '',
-        detail_event: '',
-        start_date: '',
-        end_date: '',
-        posted_timestamp: '',
-        event_type: '',
-        event_img: '',
-        activity_hour: 0,
-        event_status: false,
-        event_img_list: [],
-      },
-    },
-    start_date: '',
-    end_date: 'string',
-    uploaded_img: [],
-    uploaded_pdf: '',
-    status_request: '',
-    type_request: '',
-    permissions_request: '',
-    _id: '',
-    date_request: '',
-  },
+const initialState: kpiRequestState = {
+  isLoading: false,
+  isError: false,
+  isSuccess: false,
+  errorMessage: {},
 };
 
 // Add
@@ -74,13 +49,26 @@ const kpiRequestSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(kpiRequestAdd.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
       if (action.payload?.result === 'OK') {
-        state.requestData = action.payload.data;
+        state.isSuccess = true;
+      } else {
+        state.isError = true;
       }
+    });
+
+    builder.addCase(kpiRequestAdd.pending, (state, action) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(kpiRequestAdd.rejected, (state, action) => {
+      state.errorMessage = action.error;
+      state.isError = true;
     });
   },
 });
 
-export const kpiRequestSelector = (store: RootState): KpiRequestForUsed =>
+export const kpiRequestSelector = (store: RootState): kpiRequestState =>
   store.kpiRequestReducer;
 export default kpiRequestSlice.reducer;

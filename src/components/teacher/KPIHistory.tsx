@@ -153,11 +153,12 @@ const KPIHistory: FC<Data> = (props) => {
       title: 'เวลา',
       dataIndex: 'date_request',
       key: 'date_request',
+      defaultSortOrder: 'descend',
       sorter: (a, b) =>
         moment(a.date_request).unix() - moment(b.date_request).unix(),
       render: (_, record) => (
         <div className="">
-          {moment(record.date_request).format('DD MMMM YYYY')}
+          {moment(record.date_request).add(543, 'year').format('DD MMMM YYYY')}
         </div>
       ),
     },

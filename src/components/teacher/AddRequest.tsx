@@ -1,5 +1,5 @@
 import React, { FC, memo, useEffect, useState } from 'react';
-import { DatePicker, Empty, Modal } from 'antd';
+import { DatePicker, Empty, Modal, Spin } from 'antd';
 import '../../assets/css/Components.css';
 import './TeacherComponentSCSS/ModalComponent.scss';
 import { UploadOutlined } from '@ant-design/icons';
@@ -12,7 +12,10 @@ import { authSelector } from '../../store/slices/authSlice';
 import { useAppDispatch } from '../../store/store';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
-import { kpiRequestAdd } from '../../store/slices/kpiRequestSlice';
+import {
+  kpiRequestAdd,
+  kpiRequestSelector,
+} from '../../store/slices/kpiRequestSlice';
 import alertAdd from '../../utils/alertAdd';
 import { useNavigate } from 'react-router-dom';
 
@@ -42,13 +45,13 @@ interface RequestSubmit {
 
 const AddRequest: FC<RequestKPIProps> = (props) => {
   const authReducer = useSelector(authSelector);
+  const requestReducer = useSelector(kpiRequestSelector);
   const navigate = useNavigate();
   const Timer = (ms: number | undefined) =>
     new Promise((r) => setTimeout(r, ms));
   const dispatch = useAppDispatch();
   const [fileUploadStore, setFileUploadStore] = useState<any[]>([]);
   const [fileUpload, setFileUpload] = useState<any[]>([]);
-  const [active, setActive] = useState<string>();
   const [open, setOpen] = useState(false);
   const secectedArr: string[] = [];
   const selectedFileUpload = async (ImgName: string) => {
@@ -86,7 +89,12 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
       return;
     }
     await dispatch(kpiRequestAdd(value));
-    alertAdd(true, 'ลงทะเบียนกิจกรรมสำเร็จ', '');
+    if (requestReducer.isSuccess) {
+      alertAdd(true, 'ลงทะเบียนกิจกรรมสำเร็จ', '');
+    } else if (requestReducer.isError) {
+      alertAdd(false, 'ลงทะเบียนกิจกรรมไม่สำเร็จ กรุณาลองอีกครั้ง', '');
+      return;
+    }
     await Timer(2000);
     navigate('/teacherhistory');
   };
@@ -334,23 +342,25 @@ const AddRequest: FC<RequestKPIProps> = (props) => {
         )}
 
         <div className="flex justify-end mt-12">
-          <button
-            type="submit"
-            onClick={() =>
-              handleSubmit({
-                id_event: id_event,
-                start_date: start_date,
-                end_date: end_date,
-                status_request: 'สำเร็จ',
-                type_request: event_type,
-                uploaded_img: fileUpload.flat(),
-                uploaded_pdf: 'null',
-              })
-            }
-            className="w-full md:w-60 text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4 font-medium rounded-xl text-base px-5 py-2.5 text-center"
-          >
-            ส่งคำร้องลงบันทึกกิจกรรม
-          </button>
+          <Spin spinning={requestReducer.isLoading} size="large">
+            <button
+              type="submit"
+              onClick={() =>
+                handleSubmit({
+                  id_event: id_event,
+                  start_date: start_date,
+                  end_date: end_date,
+                  status_request: 'สำเร็จ',
+                  type_request: event_type,
+                  uploaded_img: fileUpload.flat(),
+                  uploaded_pdf: 'null',
+                })
+              }
+              className="font-Kanit w-full md:w-60 text-white bg-[#006b9c] hover:bg-[#00567e] focus:ring-4 font-medium rounded-xl text-base px-5 py-2.5 text-center"
+            >
+              ส่งคำร้องลงบันทึกกิจกรรม
+            </button>
+          </Spin>
         </div>
       </div>
     </>
