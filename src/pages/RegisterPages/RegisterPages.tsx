@@ -4,7 +4,6 @@ import logo from '../../assets/COSCI_logo.png';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import TeacherRegisterInterface from '../../components/auth/TeacherRegisterInterface';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { store, useAppDispatch } from '../../store/store';
 import {

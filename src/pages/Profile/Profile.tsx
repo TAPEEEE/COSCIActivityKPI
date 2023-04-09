@@ -3,8 +3,6 @@ import Footer from '../../components/Footer';
 import TeacherNavbar from '../../components/teacher/TeacherNavbar';
 import './Profile.css';
 import '../../scss/KPIHome.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { useAppDispatch } from '../../store/store';
 import KPIHistory from '../../components/teacher/KPIHistory';
 import ProfileComponent from '../../components/ProfileComponent';
 
@@ -55,15 +53,7 @@ const TeacherHistory: FC = () => {
                   <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8 ">
                       <div className="overflow-hidden rounded-lg">
-                        <ProfileComponent
-                          _id={''}
-                          user_id={''}
-                          name={''}
-                          role={''}
-                          email={''}
-                          tel={''}
-                          img_user={''}
-                        />
+                        <ProfileComponent />
                       </div>
                     </div>
                   </div>

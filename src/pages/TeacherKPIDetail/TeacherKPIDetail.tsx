@@ -133,7 +133,7 @@ const TeacherKPIDetailRequest: FC = () => {
 
                           {/* <div className="flex justify-start"> */}
 
-                          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-5">
+                          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 my-5">
                             <Image.PreviewGroup>
                               {kpiReducer.kpiOneResult?.event_img_list?.map(
                                 (index) => (
