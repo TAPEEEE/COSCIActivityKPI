@@ -10,6 +10,7 @@ import { authSelector, login } from '../../store/slices/authSlice';
 import { Alert } from '@mui/material';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 // const dispatch = useAppDispatch();
 // const authReducer = useSelector(authSelector);
 
@@ -22,7 +23,7 @@ const TeacherLoginInterface: FC = () => {
   const dispatch = useAppDispatch();
   const authReducer = useSelector(authSelector);
   const loadingIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
-
+  const navigate = useNavigate();
   return (
     <div>
       <Formik
@@ -95,7 +96,9 @@ const TeacherLoginInterface: FC = () => {
 
                 <div className="flex items-start">
                   <a
-                    href="#"
+                    onClick={() => {
+                      navigate('/forgotpassword');
+                    }}
                     className="text-sm text-[#00567e] hover:underline ml-auto"
                   >
                     ลืมรหัสผ่าน?

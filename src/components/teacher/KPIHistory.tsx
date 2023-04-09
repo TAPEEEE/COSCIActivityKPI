@@ -9,13 +9,6 @@ import {
 } from 'antd';
 import { Button, Space, Table, Image } from 'antd';
 import { SearchOutlined, CheckCircleFilled } from '@ant-design/icons';
-import filtersActivityList from '../../utils/filtersActivityList';
-import {
-  CompassFilled,
-  SafetyCertificateFilled,
-  TagFilled,
-  DeleteFilled,
-} from '@ant-design/icons';
 import type {
   ColumnsType,
   ColumnType,
@@ -314,7 +307,12 @@ const KPIHistory: FC<Data> = (props) => {
         )}
       >
         <Table
-          pagination={{ pageSize: 6 }}
+          pagination={{
+            pageSize: 7,
+            position: ['bottomLeft'],
+            showSizeChanger: true,
+            pageSizeOptions: ['5', '10', '15'],
+          }}
           columns={columns}
           dataSource={KpiHistorytData}
           loading={kpiReducer.isLoading}

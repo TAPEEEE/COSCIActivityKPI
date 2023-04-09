@@ -37,4 +37,6 @@ export const server = {
   REFRESH_TOKEN_KEY: `refresh_token`,
   RESEND_OTP_TEACHER: `auth/verify/resendteacher`,
   TEACHER_ADD_REQUEST: `teacher/request`,
+  TEACHER_FORGOTPASSWORD: `auth/forgotpassword-teacher`,
+  TEACHER_CHANGEPASSWORD: `teacher/changepassword`,
 };

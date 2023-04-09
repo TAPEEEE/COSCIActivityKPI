@@ -6,6 +6,8 @@ import teacherUploadReducer from './slices/teacherUploadSlice';
 import kpiReducer from './slices/kpiSlice';
 import kpiRequestReducer from './slices/kpiRequestSlice';
 import kpiHistoryReducer from './slices/kpiHistorySlice';
+import forGotPasswordReducer from './slices/teacherPasswordSlice';
+import changePasswordReducer from './slices/changePasswordSlice';
 
 const reducer = {
   authReducer,
@@ -13,6 +15,8 @@ const reducer = {
   kpiReducer,
   kpiRequestReducer,
   kpiHistoryReducer,
+  forGotPasswordReducer,
+  changePasswordReducer,
 };
 
 export const store = configureStore({

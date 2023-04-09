@@ -20,6 +20,7 @@ import TeacherAddRequest from './pages/TeacherAddRequest';
 import TeacherHistory from './pages/TeacherHistory';
 import TeacherCheckHistory from './pages/TeacherCheckHistory';
 import Profile from './pages/Profile';
+import ForgotPasswordPage from './pages/ForgotPassword/ForgotPassword';
 
 export default function App() {
   const authReducer = useSelector(authSelector);
@@ -83,7 +84,7 @@ export default function App() {
         >
           <Route path="/login" element={<LoginPages />} />
           <Route path="/pagenotfound" element={<PageNotFound />} />
-
+          <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
           <Route path="/register" element={<RegisterPages />} />
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="*" element={<Navigate to="/pagenotfound" />} />
